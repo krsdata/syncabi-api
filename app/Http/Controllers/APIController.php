@@ -220,7 +220,7 @@ class APIController extends Controller
                 )
             );
         } 
-        $user                =   User::find($user_id);
+        $user       =   User::find($user_id);
         $user->first_name    = ($request->input('firstName'))?$request->input('firstName'):$user->first_name;
         $user->last_name     = ($request->input('lastName'))?$request->input('lastName'):$user->last_name;
         $user->deviceID      = ($request->input('deviceID'))?$request->input('deviceID'):$user->deviceID;
@@ -269,12 +269,12 @@ class APIController extends Controller
             return response()->json([ "status"=>0,"message"=>"Invalid email or password. Try again!" ,'data' => '' ]);
         }
 
-        $user                   = JWTAuth::toUser($token); 
-        $data['deviceToken']    = $token;
-        $data['userID']         = $user->userID;
-        $data['firstName']      = $user->first_name;
-        $data['lastName']       = $user->last_name;
-        $data['email']          = $user->email;
+        $user = JWTAuth::toUser($token); 
+        $data['deviceToken'] = $token;
+        $data['userID'] = $user->userID;
+        $data['firstName'] = $user->first_name;
+        $data['lastName'] = $user->last_name;
+        $data['email'] = $user->email;
 
         if(!$user->status)
         {

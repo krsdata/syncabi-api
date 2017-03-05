@@ -2,9 +2,9 @@
         <!-- sign  -->
         <a class="logo" href="{{ url('admin') }}">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>Inesport</b></span>
+          <span class="logo-mini"><b>Udex</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Inesport Admin</b></span>
+          <span class="logo-lg"><b>Udex Admin</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav role="navigation" class="navbar navbar-static-top">

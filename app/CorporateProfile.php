@@ -11,7 +11,7 @@ class CorporateProfile extends Model
      *
      * @var string
      */
-    protected $table = 'corporate_profiles';
+    protected $table = 't_corporate_profile';
     /**
      * The attributes that are mass assignable.
      *

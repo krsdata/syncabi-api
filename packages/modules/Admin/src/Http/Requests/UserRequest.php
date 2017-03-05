@@ -21,7 +21,7 @@ class UserRequest extends Request {
                     }
                 case 'POST': {
                         return [
-                            'email'   => "required|email|unique:users,email" ,  
+                            'email'   => "required|email|unique:t_user,email" ,  
                             'first_name' => 'required|min:3',
                             'last_name' => 'required', 
                             'password' => 'required|min:6',

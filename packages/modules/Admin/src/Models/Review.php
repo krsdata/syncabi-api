@@ -11,7 +11,7 @@ class Review extends BaseModel {
      * 
      * @var string
      */
-    protected $table = 'reviews';
+    protected $table = 't_review';
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
     protected $fillable = ['UserID','Date','Rate','Text','saving','Approved'];
 }

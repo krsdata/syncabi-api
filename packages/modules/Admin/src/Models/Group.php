@@ -11,15 +11,15 @@ class Group extends BaseModel {
      * 
      * @var string
      */
-    protected $table = 'groups';
-    protected $primaryKey = 'id';
+    protected $table = 't_group';
+    protected $primaryKey = 'GroupID';
     protected $guarded = ['created_at' , 'updated_at'  ];
     protected $fillable = ['Title','Repository','DefaultPage'];
     
     
     public function user()
     {
-        return $this->belongsTo('Modules\Admin\Models\User','id','GroupID');
+        return $this->belongsTo('Modules\Admin\Models\User','GroupID','GroupID');
     }
 
 }

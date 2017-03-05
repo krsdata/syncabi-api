@@ -7,7 +7,7 @@
         <img alt="User Image" class="img-circle" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }}">
       </div>
       <div class="pull-left info">
-        <p>Inesport</p>
+        <p>Udex</p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
@@ -22,7 +22,6 @@
         </a>
           
       </li> 
-<!--
       <li class="treeview {{ (isset($page_action) && $page_title=='Corporate Profile')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
@@ -57,44 +56,42 @@
            <li class="{{ (isset($page_action) && $page_action=='View Directory')?"active":'' }}"><a href="{{ url('admin/condidateDirectory')}}"><i class="fa  fa-list"></i>Candidate Directory</a></li>
         </ul>
       </li>  
--->    
-  <li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
+      <li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
           <span>Manage Users</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li class="{{ (isset($page_action) && $page_action=='Create User')?"active":'' }}" ><a href="{{ route('user.create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
-           <li class="{{ (isset($page_action) && $page_action=='View User')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View User</a></li>
-        </ul>
-      </li>
- 
-      <li class="treeview {{ (isset($page_action) && $page_title=='Category')?"active":'' }} ">
-        <a href="#">
-          <i class="fa fa-user"></i>
-          <span>Manage category</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li class="{{ (isset($page_action) && $page_action=='Create category')?"active":'' }}" ><a href="{{ route('category.create')}}"><i class="fa fa-user-plus"></i> Create Category</a></li>
-           <li class="{{ (isset($page_action) && $page_action=='Create Sub-category')?"active":'' }}" ><a href="{{ route('sub-category.create')}}"><i class="fa fa-user-plus"></i> Add Sub-category</a></li>
-          <li class="{{ (isset($page_action) && $page_action=='View Category')?"active":'' }}"><a href="{{ route('category')}}"><i class="fa  fa-list"></i> View Category</a></li>
+          <!-- <li class="{{ (isset($page_action) && $page_action=='Create User')?"active":'' }}" ><a href="{{ route('user.create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
+           --><li class="{{ (isset($page_action) && $page_action=='View User')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View User</a></li>
         </ul>
       </li>
 
-      <li class="treeview {{ (isset($page_action) && $page_title=='Article')?"active":'' }} ">
+      <li class="treeview {{ (isset($page_action) && $page_title=='Position')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
-          <span>Manage Article</span>
+          <span>Manage Position</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li class="{{ (isset($page_action) && $page_action=='Create Article')?"active":'' }}" ><a href="{{ route('article.create')}}"><i class="fa fa-user-plus"></i> Create Article</a></li>
-          <li class="{{ (isset($page_action) && $page_action=='View Article')?"active":'' }}"><a href="{{ route('article')}}"><i class="fa  fa-list"></i> View Article</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='Create Position')?"active":'' }}" ><a href="{{ route('position.create')}}"><i class="fa fa-user-plus"></i> Create Position</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Position')?"active":'' }}"><a href="{{ route('position')}}"><i class="fa  fa-list"></i> View Position</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview {{ (isset($page_action) && $page_title=='Criteria')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Criteria</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Criteria')?"active":'' }}" ><a href="{{ route('criteria.create')}}"><i class="fa fa-user-plus"></i> Create Criteria</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Criteria')?"active":'' }}"><a href="{{ route('criteria')}}"><i class="fa  fa-list"></i> View Criteria</a></li>
         </ul>
       </li>  
-     <!-- 
+      
 
       <li class="treeview {{ (isset($page_action) && $page_title=='Rating Feedback')?"active":'' }} ">
         <a href="#">
@@ -118,7 +115,7 @@
            <li class="{{ (isset($page_action) && $page_action=='View Default Criteria')?"active":'' }}"><a href="{{ route('defaultCriteria')}}"><i class="fa  fa-list"></i>Default Criteria </a></li>
         </ul>
       </li> 
--->
+
 
     </ul>
   </section>

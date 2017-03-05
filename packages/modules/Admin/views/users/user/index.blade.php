@@ -38,13 +38,13 @@
                                          <div class="col-md-2">
                                              <a href="{{ route('user') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
                                         </div>
-                                        <div class="col-md-2 pull-right">
+                                       <!--  <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
                                                 <a href="{{ route('user.create')}}">
                                                     <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add User</button> 
                                                 </a>
                                             </div>
-                                        </div> 
+                                        </div> -->
                                     </div><!-- /.box-header -->
 
                                     
@@ -63,6 +63,8 @@
                                                     <th>ID</th>
                                                     <th>Full Name</th>
                                                     <th>Email</th>
+                                                    <th>Domain Name</th>
+                                                    <th>Designation</th>  
                                                     <th>Signup Date</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -86,7 +88,8 @@
                                                     <td>{{ $user->userID }}</td>
                                                     <td>{{ $user->first_name.' '.$user->last_name }}</td>
                                                     <td>{{ $user->email }} </td>
-                                                   
+                                                    <td>   {{ $helper->getCompanyUrl($user->email) }}</td>
+                                                    <td>{{ $user->position->position_name }}</td>  
                                                     <td>
                                                         {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>

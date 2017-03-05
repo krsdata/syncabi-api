@@ -11,7 +11,7 @@ class RatingFeedback extends Model
      *
      * @var string
      */
-    protected $table = 'rating_feedbacks';
+    protected $table = 'rating_feedback';
     /**
      * The attributes that are mass assignable.
      *

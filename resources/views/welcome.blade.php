@@ -8,7 +8,7 @@
                 <div class="panel-heading">Welcome</div>
 
                 <div class="panel-body">
-                   <h1> We're working hard to improve our website. </html>
+                    Under progress...
                 </div>
             </div>
         </div>

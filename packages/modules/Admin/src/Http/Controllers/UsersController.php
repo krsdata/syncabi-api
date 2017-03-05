@@ -74,7 +74,7 @@ class UsersController extends Controller {
 
             $search = isset($search) ? Input::get('search') : '';
                
-            $users = User::where(function($query) use($search,$status) {
+            $users = User::with('position')->where(function($query) use($search,$status) {
                         if (!empty($search)) {
                             $query->Where('first_name', 'LIKE', "%$search%")
                                     ->OrWhere('last_name', 'LIKE', "%$search%")
@@ -86,10 +86,11 @@ class UsersController extends Controller {
                         }
                     })->Paginate($this->record_per_page);
         } else {
-            $users = User::orderBy('userID','desc')->Paginate($this->record_per_page);
+            $users = User::with('position')->orderBy('userID','desc')->Paginate($this->record_per_page);
         }
-        
-        
+        //dd($users[0]->group);
+       // dd($users[0]->position->position_name);
+        //dd($users);
         return view('packages::users.user.index', compact('status','users', 'page_title', 'page_action'));
     }
 
@@ -111,10 +112,17 @@ class UsersController extends Controller {
      * */
 
     public function store(UserRequest $request, User $user) {
-        $user->fill(Input::all()); 
-        $user->password = Hash::make($request->get('password'));  
-        $user->save(); 
+        $user->fill(Input::all());
+        
+        $user->password = Hash::make($request->get('password'));
+        $user->positionID = $request->get('positionID'); 
+        $user->save();
+        $helper = new Helper;
+        /** --Create Company Group-- **/
+        $helper->createCompanyGroup($request->get('email'),$user->userID);
        
+      
+
         return Redirect::to(route('user'))
                             ->with('flash_alert_notice', 'New user was successfully created !');
         }
@@ -128,15 +136,17 @@ class UsersController extends Controller {
     public function edit(User $user) {
 
         $page_title = 'User';
-        $page_action = 'Show Users'; 
+        $page_action = 'Show Users';
+        $position = Position::all();
         
-        return view('packages::users.user.edit', compact('user', 'page_title', 'page_action'));
+        return view('packages::users.user.edit', compact('position','user', 'page_title', 'page_action'));
     }
 
     public function update(Request $request, User $user) {
         
         $user->fill(Input::all());
-        $user->password = Hash::make($request->get('password')); 
+        $user->password = Hash::make($request->get('password'));
+        $user->positionID = $request->get('positionID');
         $user->save();
         return Redirect::to(route('user'))
                         ->with('flash_alert_notice', 'User was  successfully updated !');
