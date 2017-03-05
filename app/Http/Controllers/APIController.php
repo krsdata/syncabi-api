@@ -55,29 +55,6 @@ class APIController extends Controller
             $request->headers->set('Content-Type', 'application/json');
         }
         $user_id =  $request->input('userID');
-        
-       /* if($user_id!=null){
-            $message = "";
-            $push_n = PushNotification::where('receiver_id',$user_id)
-                                        ->where('status',0)->get();
-            $user_device_id = User::find($user_id);
-             
-            if(count($user_device_id)>0 && ($user_device_id->device_token!="")){
-                dd('test');
-                $push_notification_token = $user_device_id->device_token; 
-                if($push_n->count()>0){
-                    foreach ($push_n as $key => $notify_txt) {
-                        $message = $notify_txt->notification_text;
-                        Helper::send_ios_notification($push_notification_token,$message);
-                        $is_notification_sent = PushNotification::find($notify_txt->id);
-                        $is_notification_sent->status =1;
-                        $is_notification_sent->device_token = $push_notification_token;
-                        $is_notification_sent->save();        
-                    }
-                                                
-                }
-            }   
-        } */
     } 
     
     public function validateUser(Request $request,User $user){
@@ -86,16 +63,14 @@ class APIController extends Controller
         $input['last_name']     = $request->input('lastName'); 
         $input['email']         = $request->input('email'); 
         $input['password']      = Hash::make($request->input('password'));
-        $input['deviceID']      = ($request->input('deviceID'))?$request->input('deviceID'):'';
          //Server side valiation
         if($request->input('userID')){
             $validator = Validator::make($request->all(), [
-                  
             ]); 
         } 
         else{
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email|unique:t_user' 
+                'email' => 'required|email|unique:users' 
             ]); 
         }
        
@@ -113,21 +88,6 @@ class APIController extends Controller
                 )
             );
         }
-
-        $helper = new Helper;
-        $group_name =  $helper->getCorporateGroupName($input['email']);
-        $email_allow = array('gmail','yahoo','ymail','aol','hotmail');
-
-        if(in_array($group_name, $email_allow))
-        {
-           return Response::json(array(
-                'status' => 0,
-                'message' => 'Only corporate email is allowed!',
-                'data'  =>  ''
-                )
-            ); 
-        }
-
         return response()->json(
                             [ 
                                 "status"=>1,
