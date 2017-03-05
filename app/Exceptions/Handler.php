@@ -58,6 +58,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {    
+      // d($e);
        //$referrer = $request->headers->get('referer'); 
        $path_info_url = $request->getpathInfo();
        $api_url='';

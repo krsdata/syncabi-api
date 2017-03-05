@@ -37,6 +37,7 @@ use App\PushNotification;
 use JWTException;
 use TokenInvalidException;
 
+ini_set('memory_limit', '512M');
 
 class APIController extends Controller
 {
@@ -107,13 +108,12 @@ class APIController extends Controller
 
     public function register(Request $request,User $user)
     {   
-
-        $input['first_name'] 	= $request->input('firstName');
-    	$input['last_name'] 	= $request->input('lastName'); 
-    	$input['email'] 		= $request->input('email'); 
-    	$input['password'] 	    = Hash::make($request->input('password'));
-    	$input['deviceID'] 	    = ($request->input('deviceID'))?$request->input('deviceID'):'';
-        $input['positionID']    = ($request->input('positionName'))?$request->input('positionName'):'';
+        $input['name'] 	       = $request->input('name');
+    	$input['email'] 	   = $request->input('email'); 
+    	$input['phone']        = $request->input('phone'); 
+        $input['mobile']       = $request->input('mobile');
+        $input['user_type']    = $request->input('user_type');  
+        $input['password'] 	    = Hash::make($request->input('password'));
         
         if($request->input('userID')){
             $u = $this->updateProfile($request,$user);
@@ -122,8 +122,9 @@ class APIController extends Controller
 
         //Server side valiation
         $validator = Validator::make($request->all(), [
-           'email' => 'required|email|unique:t_user',
-            'positionName' => 'required'
+           'email' => 'required|email|unique:users',
+           'user_type' => 'required',
+           'name' => 'required'
         ]);
         /** Return Error Message **/
         if ($validator->fails()) {
@@ -144,11 +145,8 @@ class APIController extends Controller
         /** --Create USER-- **/
         $user = User::create($input); 
        // $data = ['userID'=>$user->userID,'name'=>$user['first_name'],'email'=>$user['email'],'firstName'=>$user['first_name'],'lastName'=>$user['last_name']];
-         
-        /** --Create Company Group-- **/
-        $h = $helper->createCompanyGroup($request->input('email'),$user->userID);
         /** --Send Mail after Sign Up-- **/
-        $subject = "Welcome to Udex! Verify your email address to get started";
+        $subject = "Welcome to syncabi! Verify your email address to get started";
         $email_content = array('receipent_email'=> $request->input('email'),'subject'=>$subject);
         $verification_email = $helper->sendMailFrontEnd($email_content,'verification_link',['name'=> $request->input('firstName')]);
        
@@ -180,16 +178,16 @@ class APIController extends Controller
                 )
             );
         } 
-        $user       =   User::find($user_id);
-        $user->first_name    = ($request->input('firstName'))?$request->input('firstName'):$user->first_name;
-        $user->last_name     = ($request->input('lastName'))?$request->input('lastName'):$user->last_name;
-        $user->deviceID      = ($request->input('deviceID'))?$request->input('deviceID'):$user->deviceID;
-        $user->positionID    = ($request->input('positionName'))?$request->input('positionName'):$user->positionID;
- 
+        $user               =   User::find($user_id);
+        $user->name         = ($request->input('name'))?$request->input('name'):$user->name;
+        $user->phone        = ($request->input('phone'))?$request->input('phone'):$user->phone;
+        $user->mobile       = ($request->input('mobile'))?$request->input('mobile'):$user->mobile;
+        $user->mobile       = ($request->input('user_type'))?$request->input('user_type'):$user->user_type;
+  
 
         //Server side valiation
         $validator = Validator::make($request->all(), [
-            'positionName' => 'required'
+            'name' => 'required'
         ]);
         /** Return Error Message **/
         if ($validator->fails()) { 
@@ -203,9 +201,8 @@ class APIController extends Controller
  
         // Update USER
         $user->save();  
-        $position_name = Helper::getPositionNameById($user->positionID);
          
-        $data = ['userID'=>$user->userID,'firstName'=>$user->first_name,'lastName'=>$user->last_name,'email'=>$user->email,'positionID'=> $user->positionID,'positionName'=>$position_name ];
+        $data = ['userID'=>$user->userID,'name'=>$user->name,'email'=>$user->email,'userType'=>$user_type ];
        
         return response()->json(
                             [ 
