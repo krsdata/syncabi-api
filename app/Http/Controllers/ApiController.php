@@ -97,7 +97,7 @@ class ApiController extends Controller
             );
         }  
         $user = User::create($input); 
-        $data = ['userID'=>$user->id,'name'=>$user->name,'email'=>$user->email];
+        $data = ['userID'=>$user->id,'name'=>$user->name,'email'=>$user->email,'userType'=>$user->user_type];
 
         return response()->json(
                             [ 
