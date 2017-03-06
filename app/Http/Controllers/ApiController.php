@@ -65,7 +65,7 @@ class ApiController extends Controller
         $input['email']        = $request->input('email'); 
         $input['phone']        = $request->input('phone'); 
         $input['mobile']       = $request->input('mobile');
-        $input['user_type']    = $request->input('user_type');  
+        $input['user_type']    = $request->input('userType');  
         $input['password']      = Hash::make($request->input('password'));
         
         if($request->input('userID')){
@@ -77,7 +77,8 @@ class ApiController extends Controller
         $validator = Validator::make($request->all(), [
            'email' => 'required|email|unique:users',
            'name'  => 'required',
-           'password' => 'required'
+           'password' => 'required',
+           'userType' => 'required'
 
         ]);
         /** Return Error Message **/
