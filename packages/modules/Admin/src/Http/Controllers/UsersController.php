@@ -74,10 +74,9 @@ class UsersController extends Controller {
 
             $search = isset($search) ? Input::get('search') : '';
                
-            $users = User::with('position')->where(function($query) use($search,$status) {
+            $users = User::where(function($query) use($search,$status) {
                         if (!empty($search)) {
-                            $query->Where('first_name', 'LIKE', "%$search%")
-                                    ->OrWhere('last_name', 'LIKE', "%$search%")
+                            $query->Where('name', 'LIKE', "%$search%")
                                     ->OrWhere('email', 'LIKE', "%$search%");
                         }
                         if (!empty($status)) {
@@ -86,11 +85,12 @@ class UsersController extends Controller {
                         }
                     })->Paginate($this->record_per_page);
         } else {
-            $users = User::with('position')->orderBy('userID','desc')->Paginate($this->record_per_page);
+            $users = User::orderBy('id','desc')->Paginate($this->record_per_page);
+            
         }
         //dd($users[0]->group);
        // dd($users[0]->position->position_name);
-        //dd($users);
+         //dd($users);
         return view('packages::users.user.index', compact('status','users', 'page_title', 'page_action'));
     }
 
@@ -137,9 +137,8 @@ class UsersController extends Controller {
 
         $page_title = 'User';
         $page_action = 'Show Users';
-        $position = Position::all();
         
-        return view('packages::users.user.edit', compact('position','user', 'page_title', 'page_action'));
+        return view('packages::users.user.edit', compact('user', 'page_title', 'page_action'));
     }
 
     public function update(Request $request, User $user) {

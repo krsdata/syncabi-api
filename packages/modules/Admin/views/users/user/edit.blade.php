@@ -15,7 +15,7 @@
                           <div class="panel-body ">
                               <div class="row">  
 
-                                {!! Form::model($user, ['method' => 'PATCH', 'route' => ['user.update', $user->userID],'class'=>'form-horizontal','id'=>'users_form']) !!}
+                                {!! Form::model($user, ['method' => 'PATCH', 'route' => ['user.update', $user->id],'class'=>'form-horizontal','id'=>'users_form']) !!}
                                     @include('packages::users.user.form', compact('user'))
                                 {!! Form::close() !!}
                               </div>

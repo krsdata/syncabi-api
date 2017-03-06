@@ -27,10 +27,5 @@ class HomeController extends Controller
     {
         dd(Auth::user());
          
-    }
-    public function register()
-    {
-        dd('register');
-         
-    }
+    } 
 }

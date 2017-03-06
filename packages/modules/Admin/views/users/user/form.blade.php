@@ -1,21 +1,13 @@
 
 <div class="col-md-6">
 
-    <div class="form-group{{ $errors->first('first_name', ' has-error') }}">
+    <div class="form-group{{ $errors->first('name', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> First Name <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('first_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
-            <span class="label label-danger">{{ $errors->first('first_name', ':message') }}</span>
+            {!! Form::text('name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('name', ':message') }}</span>
         </div>
     </div> 
-
-    <div class="form-group{{ $errors->first('last_name', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Last Name</label>
-        <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('last_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
-            <span class="label label-danger">{{ $errors->first('last_name', ':message') }}</span>
-        </div>
-    </div>
 
     <div class="form-group{{ $errors->first('email', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Email</label>
@@ -38,20 +30,17 @@
             <span class="label label-danger">{{ $errors->first('password', ':message') }}</span>
         </div>
     </div>
-    <div class="form-group{{ $errors->first('position', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Designation</label>
+    <div class="form-group{{ $errors->first('user_type', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">User Type</label>
         <div class="col-lg-8 col-md-8"> 
-           <select name="positionID" class="form-control form-cascade-control">
-            @foreach($position as $key=>$value)
-            
-            <option value="{{$value->id}}" {{($value->id ==$user->positionID)?"selected":""}}>{{ $value->position_name }}</option>
-            @endforeach
-            </select>
-            <span class="label label-danger">{{ $errors->first('positionID', ':message') }}</span>
+         {!! Form::text('user_type',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
+            <span class="label label-danger">{{ $errors->first('user_type', ':message') }}</span>
+            @if(Session::has('flash_alert_notice')) 
+            <span class="label label-danger">
+                {{ Session::get('flash_alert_notice') }} 
+            </span>@endif
         </div>
     </div>    
-
-     
     
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>

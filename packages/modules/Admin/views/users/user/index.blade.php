@@ -60,11 +60,9 @@
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
                                                     <th>Sno</th>
-                                                    <th>ID</th>
                                                     <th>Full Name</th>
                                                     <th>Email</th>
-                                                    <th>Domain Name</th>
-                                                    <th>Designation</th>  
+                                                    <th>User Type</th>  
                                                     <th>Signup Date</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -85,26 +83,25 @@
                                               <tbody>    
                                                 <tr>
                                                     <td>{{ ++$key }}</td>
-                                                    <td>{{ $user->userID }}</td>
-                                                    <td>{{ $user->first_name.' '.$user->last_name }}</td>
+                                                    <td>{{ $user->id }}</td>
+                                                    <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }} </td>
-                                                    <td>   {{ $helper->getCompanyUrl($user->email) }}</td>
-                                                    <td>{{ $user->position->position_name }}</td>  
+                                                    <td>   {{ $user->user_type }}</td>
                                                     <td>
                                                         {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>
                                                     <td>
-                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->userID}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->userID}},'user')" >
+                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'user')" >
                                                             {{ ($user->status==1)?'Active':'Inactive'}}
                                                         </span>
                                                     </td>
                                                     <td> 
-                                                        <a href="{{ route('user.edit',$user->userID)}}">
+                                                        <a href="{{ route('user.edit',$user->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->userID, 'route' => array('user.destroy', $user->userID))) !!}
-                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$user->userID}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->id, 'route' => array('user.destroy', $user->id))) !!}
+                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$user->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                          {!! Form::close() !!}
 

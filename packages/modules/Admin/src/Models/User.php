@@ -16,7 +16,7 @@ class User extends Authenticatable {
      *
      * @var string
      */
-    protected $table = 't_user';
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -27,15 +27,21 @@ class User extends Authenticatable {
      *
      * @var string
      */
-    protected $primaryKey = 'userID';
+    protected $primaryKey = 'id';
     
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['first_name','last_name','phone','mobile','email','positionID', 
-                            'deviceID','device_token','remember_token'];  // All field of user table here    
+    protected $fillable = [
+                            'name',
+                            'phone',
+                            'mobile',
+                            'email', 
+                            'user_type',
+                            'remember_token'
+                        ];  // All field of user table here    
 
 
     /**
@@ -44,21 +50,7 @@ class User extends Authenticatable {
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
-
-    public function position()
-    {
-        return $this->belongsTo('Modules\Admin\Models\Position','positionID','id');
-    }
-    public function corporateProfile()
-    {
-        return $this->hasOne('Modules\Admin\Models\CorporateProfile','userID','userID');
-    }
-
-    public function evaluatedCondidate()
-    {
-        return $this->hasMany('Modules\Admin\Models\InterviewRating','interviewerID','userID');
-    }
 }
