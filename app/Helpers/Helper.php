@@ -51,47 +51,7 @@ class Helper {
     * Response :  string
     * Return : company name
     */
-    public function createCompanyGroup($email=null,$user_id=null)
-    {
-        $request = new Request;
-        $fps =  strripos($email,"@");
-        $lps =  strpos(substr($email,$fps),".");
-        $company_url = substr($email,$fps+1);
-        $company_name = substr($email,$fps+1,$lps-1);
-        
-        //Server side valiation
-        $validator = Validator::make(array('company_name'=>$company_name), [
-            'company_name' => 'unique:t_corporate_profile',
-            
-        ]);
-        
-        // Return Error Message
-        if ($validator->fails()) {  
-            $cp_record  = CorporateProfile::where('company_name',$company_name)
-                            ->where('companyID',0)->first();
-              
-            $company_id      =  isset($cp_record->id)?$cp_record->id:0;
-            $company_profile = new CorporateProfile;
-            $company_profile->company_name =  $company_name;
-            $company_profile->userID = $user_id;
-            $company_profile->companyID =$company_id ;
-            $company_profile->company_url = $company_url;
-            $company_profile->user_email  = $email; 
-            $company_profile->save(); 
-            return $company_name;
-
-        }else{
- 
-            $company_profile = new CorporateProfile;
-            $company_profile->company_name =  $company_name;
-            $company_profile->userID = $user_id;
-            $company_profile->companyID =0;
-            $company_profile->company_url = $company_url;
-            $company_profile->user_email  = $email;
-            $company_profile->save();
-            return $company_name;
-        } 
-    }
+    
 /* @method : getCorporateGroupName
     * @param : email
     * Response :  string
@@ -138,7 +98,7 @@ class Helper {
     */
     static public function isUserExist($user_id=null)
     {
-        $user = User::where('userID',$user_id)->count(); 
+        $user = User::where('id',$user_id)->count(); 
         return $user;
     }
 /* @method : getUserDetailsByID

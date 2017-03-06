@@ -12,7 +12,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 't_user';
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,15 +23,15 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'userID';
+    protected $primaryKey = 'id';
     
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['first_name','last_name','phone','mobile','email','positionID', 
-                            'password','deviceID','device_token','remember_token'];  // All field of user table here    
+    protected $fillable = ['name','phone','mobile','email', 'user_type',
+                            'password','device_token','remember_token'];  // All field of user table here    
 
 
     /**
@@ -43,8 +43,5 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function position()
-    {
-        return $this->belongsTo('App\Position','positionID','id');
-    }
+    
 }

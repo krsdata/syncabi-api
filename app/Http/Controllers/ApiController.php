@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Log\Writer;
+use Monolog\Logger as Monolog;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests; 
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Encryption\DecryptException;
 use App\Helpers\Helper as Helper;
 use App\User;
 use Config;
@@ -19,18 +24,22 @@ use Hash;
 use Lang;
 use JWTAuth;
 use Input;
+use Closure;
 use URL; 
-use JWTAuth;
+use JWTException;
+use TokenInvalidException;
+use Mail;
 
-class APIController extends Controller
+
+class ApiController extends Controller
 {
-	
+    
    /* @method : validateUser
-	* @param : email,password,firstName,lastName
-	* Response : json
-	* Return : token and user details
-	* Author : kundan Roy
-	* Calling Method : get	
+    * @param : email,password,firstName,lastName
+    * Response : json
+    * Return : token and user details
+    * Author : kundan Roy
+    * Calling Method : get  
     */
 
     public function __construct(Request $request) {
@@ -38,49 +47,10 @@ class APIController extends Controller
         if ($request->header('Content-Type') != "application/json")  {
             $request->headers->set('Content-Type', 'application/json');
         }
+        $user_id =  $request->input('userID');
        
     } 
     
-    public function validateUser(Request $request,User $user){
-
-        $input['first_name']    = $request->input('firstName');
-        $input['last_name']     = $request->input('lastName'); 
-        $input['email']         = $request->input('email'); 
-        $input['password']      = Hash::make($request->input('password'));
-         //Server side valiation
-        if($request->input('userID')){
-            $validator = Validator::make($request->all(), [
-            ]); 
-        } 
-        else{
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email|unique:users' 
-            ]); 
-        }
-       
-        // Return Error Message
-        if ($validator->fails()) {
-                    $error_msg  =   [];
-            foreach ( $validator->messages()->all() as $key => $value) {
-                        array_push($error_msg, $value);     
-                    }
-                            
-            return Response::json(array(
-                'status' => 0,
-                'message' => $error_msg[0],
-                'data'  =>  ''
-                )
-            );
-        }
-        return response()->json(
-                            [ 
-                                "status"=>1,
-                                "message"=>"User validated successfully.",
-                                'data'=>$request->all()
-                            ]
-                        );  
-    }   
-
    /* @method : register
     * @param : email,password,deviceID,firstName,lastName
     * Response : json
@@ -91,19 +61,51 @@ class APIController extends Controller
 
     public function register(Request $request,User $user)
     {   
-        $input['name'] 	       = $request->input('name');
-    	$input['email'] 	   = $request->input('email'); 
-    	$input['phone']        = $request->input('phone'); 
+        $input['name']         = $request->input('name');
+        $input['email']        = $request->input('email'); 
+        $input['phone']        = $request->input('phone'); 
         $input['mobile']       = $request->input('mobile');
         $input['user_type']    = $request->input('user_type');  
-        $input['password'] 	    = Hash::make($request->input('password'));
+        $input['password']      = Hash::make($request->input('password'));
         
-
-        if($request->input('userID'))  dd($user);
+        if($request->input('userID')){
             $u = $this->updateProfile($request,$user);
             return $u;
         } 
-    
+
+        //Server side valiation
+        $validator = Validator::make($request->all(), [
+           'email' => 'required|email|unique:users',
+           'name'  => 'required',
+           'password' => 'required'
+
+        ]);
+        /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg,
+                'data'  =>  $request->all()
+                )
+            );
+        }  
+        $user = User::create($input); 
+        $data = ['userID'=>$user->id,'name'=>$user->name,'email'=>$user->email];
+
+        return response()->json(
+                            [ 
+                            "status"=>1,
+                            'code'   => 200,
+                            "message"=>"Thank you for registration.",
+                            'data'=>$data
+                            ]
+                        );
     }
 
 /* @method : update User Profile
@@ -125,13 +127,11 @@ class APIController extends Controller
                 )
             );
         } 
-        $user               =   User::find($user_id);
-        $user->name         = ($request->input('name'))?$request->input('name'):$user->name;
-        $user->phone        = ($request->input('phone'))?$request->input('phone'):$user->phone;
-        $user->mobile       = ($request->input('mobile'))?$request->input('mobile'):$user->mobile;
-        $user->mobile       = ($request->input('user_type'))?$request->input('user_type'):$user->user_type;
-  
-
+        $user           =   User::find($user_id);
+        $user->name     = ($request->input('name'))?$request->input('name'):$user->name;
+        $user->phone     = ($request->input('phone'))?$request->input('phone'):$user->phone;
+        $user->mobile     = ($request->input('mobile'))?$request->input('mobile'):$user->phone;
+       
         //Server side valiation
         $validator = Validator::make($request->all(), [
             'name' => 'required'
@@ -140,20 +140,20 @@ class APIController extends Controller
         if ($validator->fails()) { 
             return Response::json(array(
                 'status' => 0,
+                'code' => 500,
                 'message' => $validator->messages()->all(),
                 'data'  =>  ''
                 )
             );
         } 
- 
         // Update USER
         $user->save();  
-         
-        $data = ['userID'=>$user->userID,'name'=>$user->name,'email'=>$user->email,'userType'=>$user_type ];
+        $data = ['userID'=>$user->userID,'name'=>$user->name,'phone'=>$user->phone,'email'=>$user->email,'mobile'=> $user->mobile,'userType'=>$user->user_type,'status'=>$user->status ];
        
         return response()->json(
                             [ 
                                 "status"=>1,
+                                'code' => 200,
                                 "message"=>"Profile updated successfully.",
                                 'data'=>$data
                             ]
@@ -161,70 +161,45 @@ class APIController extends Controller
     }
 
    /* @method : login
-	* @param : email,password and deviceID
-	* Response : json
-	* Return : token and user details
-	* Author : kundan Roy	
+    * @param : email,password and deviceID
+    * Response : json
+    * Return : token and user details
+    * Author : kundan Roy   
     */
     public function login(Request $request)
-    {   
+    {    
         $input = $request->all();
-    	if (!$token = JWTAuth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])) {
+        if (!$token = JWTAuth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])) {
             return response()->json([ "status"=>0,"message"=>"Invalid email or password. Try again!" ,'data' => '' ]);
         }
 
         $user = JWTAuth::toUser($token); 
-        $data['deviceToken'] = $token;
-        $data['userID'] = $user->userID;
-        $data['firstName'] = $user->first_name;
-        $data['lastName'] = $user->last_name;
-        $data['email'] = $user->email;
 
-        if(!$user->status)
+        $data['userID']         = $user->id;
+        $data['name']           = $user->name; 
+        $data['email']          = $user->email;
+        $data['phone']          = $user->phone;
+        $data['mobile']         = $user->mobile;
+        $data['user_type']      = $user->user_type;
+        $data['token']          = $token;
+
+        if($user->status)
         {
-            return response()->json([ "status"=>0,"message"=>"Your email is not verified!" ,'data' => '' ]);   
+           // return response()->json([ "status"=>0,"message"=>"Your email is not verified!" ,'data' => '' ]);   
         }
-        $user = User::find($user->userID);
-        $user->device_token  = $request->input('notificationToken');
-        $user->save();
-        
-       /*
-        * Push notification code start here
-        * Param : Device Token, UserID
-        */
-        $message = "";
-        $push_n = PushNotification::where('receiver_id',$user->userID)
-                                    ->where('status',0)->get();
-
-        $push_notification_token = $request->input('notificationToken'); 
-        $push_notification_token_old = "2e23fd7d9f6afc9a5b7e1f60a44a05e85c0e6b224d29ff76343b2aa28c52864d";                           
-        $push_notification_token = isset($push_notification_token)?$push_notification_token:$push_notification_token_old; 
-        if($push_n->count()>0){
-            foreach ($push_n as $key => $notify_txt) {
-                $message = $notify_txt->notification_text;
-                Helper::send_ios_notification($push_notification_token,$message);
-                $is_notification_sent = PushNotification::find($notify_txt->id);
-                $is_notification_sent->status =1;
-                $is_notification_sent->device_token = $push_notification_token;
-                $is_notification_sent->save();        
-            }
-                                        
-        }  
-
-        /*-----------------END Notification--------*/
-
-    	return response()->json([ "status"=>1,"message"=>"Successfully logged in." ,'data' => $data ]);
+ 
+        return response()->json([ "status"=>1,"code"=>200,"message"=>"Successfully logged in." ,'data' => $data ]);
 
     } 
    /* @method : get user details
-	* @param : Token and deviceID
-	* Response : json
-	* Return : User details	
+    * @param : Token and deviceID
+    * Response : json
+    * Return : User details 
    */
    
     public function getUserDetails(Request $request)
     {
-    	$user = JWTAuth::toUser($request->input('deviceToken'));
+        $user = JWTAuth::toUser($request->input('deviceToken'));
         $data['userID'] = $user->userID;
         $data['firstName'] = $user->first_name;
         $data['lastName'] = $user->last_name;
