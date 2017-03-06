@@ -100,10 +100,8 @@ class UsersController extends Controller {
 
     public function create(User $user) 
     {
-        $position = Position::all();
         $page_title = 'User';
         $page_action = 'Create User';
-
         return view('packages::users.user.create', compact('position', 'user', 'page_title', 'page_action', 'groups'));
     }
 
@@ -113,16 +111,9 @@ class UsersController extends Controller {
 
     public function store(UserRequest $request, User $user) {
         $user->fill(Input::all());
-        
         $user->password = Hash::make($request->get('password'));
-        $user->positionID = $request->get('positionID'); 
         $user->save();
-        $helper = new Helper;
-        /** --Create Company Group-- **/
-        $helper->createCompanyGroup($request->get('email'),$user->userID);
-       
-      
-
+        
         return Redirect::to(route('user'))
                             ->with('flash_alert_notice', 'New user was successfully created !');
         }
@@ -145,7 +136,6 @@ class UsersController extends Controller {
         
         $user->fill(Input::all());
         $user->password = Hash::make($request->get('password'));
-        $user->positionID = $request->get('positionID');
         $user->save();
         return Redirect::to(route('user'))
                         ->with('flash_alert_notice', 'User was  successfully updated !');
@@ -157,7 +147,7 @@ class UsersController extends Controller {
      */
     public function destroy(User $user) {
         
-        User::where('userID',$user->userID)->delete();
+        User::where('userID',$user->id)->delete();
 
         return Redirect::to(route('user'))
                         ->with('flash_alert_notice', 'User was successfully deleted!');
