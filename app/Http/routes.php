@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
-        Route::post('register', 'ApiController@register');  
+        Route::match(['post','get'],'ApiController@register');  
         Route::match(['post','get'],'login', 'ApiController@login'); 
         Route::match(['post','get'],'email_verification','APIController@emailVerification');  
         Route::match(['post','get'],'forget_password','ApiController@forgetPassword'); 
