@@ -90,7 +90,7 @@ class ApiController extends Controller
             return Response::json(array(
                 'status' => 0,
                 'code'   => 500,
-                'message' => $error_msg,
+                'message' => $error_msg[0],
                 'data'  =>  $request->all()
                 )
             );
