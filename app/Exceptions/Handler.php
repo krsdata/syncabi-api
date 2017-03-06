@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {    
-      dd($e);
+       
        //$referrer = $request->headers->get('referer'); 
        $path_info_url = $request->getpathInfo();
        $api_url='';
@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
                 echo json_encode(
                     [ "status"=>1,
                       "code"=>200,
-                      "message"=>"Oops! Server is busy please try later." ,
+                      "message"=>$e->getMessage(),
                       "data" => "" 
                     ]
                 );
