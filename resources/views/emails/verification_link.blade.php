@@ -15,7 +15,7 @@ table {
   <tr>
      <!-- <td width="197" align="right" valign="top" style="background-color:#17DA8A"><img src="https://www.wiaipi.com/public/assets/front-end/images/logo.png" width="197" height="61" style="display:block;"></td> -->
       <td align="center" valign="middle" bgcolor="" style="background-color:#17DA8A ; padding:20px; color:#332C41;font-size:28px; ">
-      <div style="font-size:24px;">UDEX</div>
+      <div style="font-size:24px;">Email Verification</div>
     </td>
   </tr>
 </table>
@@ -27,8 +27,8 @@ table {
                 <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#000;"> 
                   <div>
                         <p>Dear {{$content['name']}},</p>
-                        <p>Welcome to Udex!</p>
-                        <p>Udex makes evaluating job candidates easier and more effective. To activate
+                        <p>Welcome !</p>
+                        <p>Thank you for registration. To activate
 your account, please click the link below to confirm your email address and
 get started with better interview evaluations.
                         </p>
@@ -41,8 +41,8 @@ get started with better interview evaluations.
                         <a href="{{ url('api/v1/email_verification?verification_code='.$content['verification_token'].'&email='.$content['email']) }}">
                           {{ url('api/v1/email_verification?verification_code='.$content['verification_token'].'&email='.$content['email']) }}</a> 
                       </p> 
-                          <p>Happy Evaluating,</p>
-                          <p>Team Udex</p>
+                          <p>Best Regards,</p>
+                          <p>Team Syncabi</p>
 
                   </div>
                 </td>

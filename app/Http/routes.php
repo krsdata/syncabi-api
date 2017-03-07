@@ -23,7 +23,7 @@ Route::group(['prefix' => 'api/v1'], function()
     Route::group(['middleware' => 'api'], function () {
         Route::match(['post','get'],'register','ApiController@register');  
         Route::match(['post','get'],'login', 'ApiController@login'); 
-        Route::match(['post','get'],'email_verification','APIController@emailVerification');  
+        Route::match(['post','get'],'email_verification','ApiController@emailVerification');  
         Route::match(['post','get'],'forget_password','ApiController@forgetPassword'); 
         Route::match(['post','get'],'validate_user','ApiController@validateUser');
         Route::match(['post','get'],'update_profile','ApiController@updateProfile');

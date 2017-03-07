@@ -99,6 +99,11 @@ class ApiController extends Controller
         $user = User::create($input); 
         $data = ['userID'=>$user->id,'name'=>$user->name,'email'=>$user->email,'userType'=>$user->user_type];
 
+        $helper = new Helper;
+        $subject = "Welcome to syncabi! Verify your email address to get started";
+        $email_content = array('receipent_email'=> $user->email,'subject'=>'subject');
+        $verification_email = $helper->sendMailFrontEnd($email_content,'verification_link',['name'=> 'fname']);
+
         return response()->json(
                             [ 
                             "status"=>1,

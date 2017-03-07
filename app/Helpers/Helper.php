@@ -77,20 +77,7 @@ class Helper {
         return  $company_url;       
     }
 
-/* @method : getUserGroupedID
-    * @param : user id
-    * Response :  all user id associate with same compnay
-    * Return : user id as array(1,2,3)
-    */
-    
-    static public function getUserGroupedID($user_id=null)
-    {
-        $corp_profile       = CorporateProfile::where('userID',$user_id)->get();
-        $corp_profile_id  = $corp_profile->lists('company_url','userID');
-        $user_from_same_company = CorporateProfile::where('company_url',$corp_profile_id[$user_id])->get();
-        
-        return $user_from_same_company->lists('userID');
-    }
+ 
 /* @method : isUserExist
     * @param : user_id
     * Response : number
@@ -101,18 +88,7 @@ class Helper {
         $user = User::where('id',$user_id)->count(); 
         return $user;
     }
-/* @method : getUserDetailsByID
-    * @param : user_id
-    * Response : number
-    * Return : count
-    */
-    static public function getCompanyUrlByEmail($email=null)
-    {
-        $fps =  strripos($email,"@");
-        $lps =  strpos(substr($email,$fps),".");
-        $company_url = substr($email,$fps+1);
-        return  $company_url;  
-    }
+ 
 /* @method : getpassword
     * @param : email
     * Response :  
@@ -137,38 +113,8 @@ class Helper {
     public static function FormatPhoneNumber($number){
         return preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $number). "\n";
     }
- /* @method : getPositionNameById
-    * @param : position_id
-    * Response :  string
-    * Return : string
-    */   
-    public static function getPositionNameById($position_id=null)
-    {
-        $position = Position::find($position_id);
-        return $position->position_name;
-    }
- /* @method : getRatingByCondidateID
-    * @param : condidate_id
-    * Response :  string
-    * Return : string
-    */
-    public static function getRatingByCondidateID($condidate_id=null)
-    {
-        $rating = InterviewRating::selectRaw('sum(rating) as total_rating')
-                                    ->selectRaw('count(*) as total_user')
-                                    ->where('condidateID',$condidate_id)->first();  
-        
-        if($rating->total_rating!=null)
-        {
-            $t_r = $rating->total_rating;
-            $t_u = $rating->total_user;
-            $rate = $t_r/$t_u;
-            $rate = number_format(floatval($rate),1);
-           return  isset($rate)?$rate:'0.0';
-        }else{
-           return "0.0"; 
-        }
-    }
+ 
+ 
 /* @method : getCondidateNameByID
     * @param : condidate_id
     * Response :  string
@@ -247,313 +193,7 @@ class Helper {
 
     }
 
-    public static function getInterviewerFromInterviewDirectory($Interview_id=null,$cid=null)
-    {
-
-       $user = User::whereIn('userID',str_getcsv($Interview_id))->get();        
-       
-       $user_data = $user->lists('name','userID');
-       $data=[];
-       foreach ($user as $key => $value) { 
-         $uid = Helper::getIndividualCompanyUser($value->userID);
-           if(in_array($value->userID, $uid))
-           { 
-                $interviewe_record =    [
-                            'userID'    => $value->userID,
-                            'firstName' => $value->first_name,
-                            'lastName'  => $value->last_name,
-                            'position'  => $value->position->position_name 
-                        ];
-                $rd = InterviewRating::where('condidateID',$cid)
-                                        ->where('interviewerID',$value->userID)->first();
-
-                $rating_by_interviewer = isset($rd->rating)?$rd->rating:"0.0";
-                $rating_date = "";
-                if($rd!=null){  
-                    $rating_d = isset($rd->created_at)?$rd->created_at:"";
-                    $rating_date = \Carbon\Carbon::parse($rating_d)->format('m/d/Y');
-                }                         
-                if($cid!=null){
-                    if($rd!=null){
-                        $criteria_id = str_getcsv($rd->interview_criteriaID);
-                        $rating_value = str_getcsv($rd->rating_value);
-                        $rating_data =   Helper::getRatingData($criteria_id,$rating_value);   
-                    }else{
-                        $rd = Interview::find($cid);
-                        $criteria_id = str_getcsv($rd->criteriaID);
-                        $rating_value = [];
-                        $rating_data=   Helper::getRatingData($criteria_id,$rating_value);   
-                    }
-                    $data[] = ['interviewer'=>$interviewe_record,'ratingDetail'=>$rating_data] ;                                  
-                  
-                }else{
-                   $data[] = $interviewe_record;
-
-                }
-               
-           }             
-       }
-       return $data; 
-    }
-    /* @method : getInterviewerFromInterviewForCandidate
-    * @param : Interview_id
-    * Response :  string
-    * Return : string
-    */
-    public static function getInterviewerFromInterviewForCandidate($Interview_id=null,$cid=null)
-    {
-
-       $user = User::whereIn('userID',str_getcsv($Interview_id))->get();        
-       
-       $user_data = $user->lists('name','userID');
-       $data=[];
-       $a = [];
-       foreach ($user as $key => $value) { 
-            $uid = Helper::getIndividualCompanyUser($value->userID);
-
-            if(in_array($value->userID, $uid))
-            { 
-                $interviewe_record =    [
-                            'userID'    => $value->userID,
-                            'firstName' => $value->first_name,
-                            'lastName'  => $value->last_name,
-                            'position'  => $value->position->position_name 
-                        ];
-                $interviewe_record_avg =    [
-                            'userID'    => "",
-                            'firstName' => "",
-                            'lastName'  => "",
-                            'position'  => "" 
-                        ];
-                                
-                $rd = InterviewRating::where('condidateID',$cid)
-                                        ->where('interviewerID',$value->userID)->first();
-
-                $rating_by_interviewer = isset($rd->rating)?$rd->rating:"0.0";
-                $rating_date = "";
-                if($rd!=null){  
-                    $rating_d = isset($rd->created_at)?$rd->created_at:"";
-                    $rating_date = \Carbon\Carbon::parse($rating_d)->format('m/d/Y');
-                }                         
-                if($cid!=null){
-                    if($rd!=null){
-                        $criteria_id = str_getcsv($rd->interview_criteriaID);
-                        $rating_value = str_getcsv($rd->rating_value);
-                        $rating_data =   Helper::getRatingData($criteria_id,$rating_value);   
-                    }else{
-                        $rd = Interview::find($cid);
-                        $criteria_id = str_getcsv($rd->criteriaID);
-                        foreach ($criteria_id as $key => $criteria_id_val_arr) {
-                            $criteria_id_val_ar[] =0; 
-                        } 
-                        $rating_value = $criteria_id_val_ar;
-
-                        $rating_data=   Helper::getRatingData($criteria_id,$rating_value);   
-                    }
-                    $data[] = ['interviewerDetail'=>$interviewe_record,'ratingDetail'=>$rating_data] ;                                  
-                  
-                   //$data[] = ['date'=>$rating_date,'rating'=>$rating_by_interviewer,'interviewerDetail'=>$interviewe_record,'ratingDetail'=>$rating_data] ;                                  
-                }else{
-                   $data[] = ['interviewerDetail'=>$interviewe_record]; 
-                }  
-           }               
-       }
-       
-       return $data; 
-    }
-/* @method : getInterviewerFromInterview
-    * @param : Interview_id
-    * Response :  string
-    * Return : string
-    */
-    public static function getInterviewerFromInterview($Interview_id=null,$cid=null)
-    {
-       try{ 
-       $user = User::whereIn('userID',str_getcsv($Interview_id))->get();        
-       
-       $user_data = $user->lists('name','userID');
-       $data=[];
-       $a = [];
-       foreach ($user as $key => $value) { 
-            $uid = Helper::getIndividualCompanyUser($value->userID);
-
-            if(in_array($value->userID, $uid))
-            { 
-                $interviewe_record =    [
-                            'userID'    => $value->userID,
-                            'firstName' => $value->first_name,
-                            'lastName'  => $value->last_name,
-                            'position'  => $value->position->position_name 
-                        ];
-                $interviewe_record_avg =    [
-                            'userID'    => "",
-                            'firstName' => "",
-                            'lastName'  => "",
-                            'position'  => "" 
-                        ];
-                                
-                $rd = InterviewRating::where('condidateID',$cid)
-                                        ->where('interviewerID',$value->userID)->first();
-
-                $rating_by_interviewer = isset($rd->rating)?$rd->rating:"0.0";
-                $rating_date = "";
-                if($rd!=null){  
-                    $rating_d = isset($rd->created_at)?$rd->created_at:"";
-                    $rating_date = \Carbon\Carbon::parse($rating_d)->format('m/d/Y');
-                }                         
-                if($cid!=null){
-                    if($rd!=null){
-                        $criteria_id = str_getcsv($rd->interview_criteriaID);
-                        $rating_value = str_getcsv($rd->rating_value);
-                        $a[] = array_combine($criteria_id,$rating_value);
-                        $rating_data =   Helper::getRatingData($criteria_id,$rating_value);   
-                        $criteria_id_evaluated = $criteria_id; 
-                    }else{
-                        $rd = Interview::find($cid);
-                        $criteria_id = str_getcsv($rd->criteriaID);
-                        if( isset($criteria_id_evaluated) && count($criteria_id_evaluated)>0)
-                        {
-                            $criteria_id = $criteria_id_evaluated;
-                        }
-                        
-                        $criteria_id_val_ar= [];
-                        foreach ($criteria_id as $key => $criteria_id_val_arr) {
-                            $criteria_id_val_ar[] ='0'; 
-                        }  
-                        $rating_value = $criteria_id_val_ar; 
-
-                        $a[] = array_combine($criteria_id,$criteria_id_val_ar); 
-
-                        $rating_data=   Helper::getRatingData($criteria_id,$rating_value);   
-                    }
-                    $data[] = ['interviewerDetail'=>$interviewe_record,'ratingDetail'=>$rating_data] ;                                  
-                  
-                   //$data[] = ['date'=>$rating_date,'rating'=>$rating_by_interviewer,'interviewerDetail'=>$interviewe_record,'ratingDetail'=>$rating_data] ;                                  
-                }else{
-                   $data[] = ['interviewerDetail'=>$interviewe_record]; 
-                } 
-           }               
-       }
-       //$data[] = ['interviewerDetail'=>$interviewe_record_avg,'ratingDetail'=>$rating_data] ;                                  
-       
-       
-       if(count($a)>0){
-            foreach ($a as $k => $subArray) {
-                foreach ($subArray as $id=>$value) {
-                    $sumArray[$id][] = $value; 
-                  }
-            }
-            // dd($sumArray);
-            $c = [];
-            foreach ($sumArray as $k => $val) { 
-                
-                foreach ($val as $val_k => $value) {
-                     if($value!=0)
-                     {
-                        $c[] = $value;
-                     }
-                }
-                $c = (count($c)==0)?1:count($c);
-              
-                $sum_criteria_rating = array_sum($val)/$c;
-                $avg_criteria_rating = number_format(floatval($sum_criteria_rating),1);
-                $arr[$k] =$avg_criteria_rating;
-                $c_id[] =  $k;
-                $c_val[] =  $avg_criteria_rating;
-                $c = [];
-            }
-            
-            $rating_data_avg =   Helper::getRatingData($c_id,$c_val); 
-
-            $data1[] = ['interviewerDetail'=>$interviewe_record_avg,'ratingDetail'=>$rating_data_avg] ;                                  
-        }
-        // dd($sumArray);   
-        $data = array_merge($data1,$data);
-           
-       return $data; 
-       }
-       catch(\Exception $e){
-            //echo $e->getMessage();
-           return  response()->json([ 
-                    "status"=>0,
-                    "code"=> 404,
-                    "message"=>"Something went wrong",
-                    'data' => ""
-                   ]
-            );
-       }
-    }
-
-   /* @method : GetCriteria
-    * @param : criteria_id,rating_value
-    * Response : json
-    * Return : User details 
-   */
-    public static function getCriteriaById($criteria_id = null,$rating_value=null,$interviewerName=null,$interviewComment=null)    
-    {
-        $criteria =  Criteria::whereIn('id',$criteria_id)->get();
-
-        if($criteria->count()>0)
-        {
-            
-            foreach ($criteria as $key => $value) {
-                $date   =  date('m/d/Y',strtotime($value->updated_at)); 
-                $data[] =  [ 
-                            'criteriaID'    => $value->id,
-                            'criteria'      => $value->interview_criteria,
-                            'ratingValue'   => isset($rating_value[$key])?$rating_value[$key]:"",
-                          
-                         ];
-            }
-            return  [   
-                        'interviewerDetail' =>  $interviewerName, 
-                        'rating'            =>  number_format(floatval((array_sum($rating_value)/count($criteria_id))),1),
-                        'date'              =>  $date,
-                        'ratingDetail'        =>  $data,
-                    ];
-        }
-        return null;  
-
-    }
-     /* @method : getAllCondidateDetails
-    * @param : criteria_id,rating_value,interviewerName
-    * Response : json
-    * Return : User details 
-   */
-    public static function getAllCondidateDetails($criteria_id = null,$rating_value=null,$interviewerName=null,$interviewComment=null)    
-    {    
-        $total_criteria = count($criteria_id);
-       
-        $criteria =  Criteria::whereIn('id',$criteria_id)->get();
-
-        $rating_value_record  = number_format(floatval((array_sum($rating_value)/$total_criteria)),1);
-        $feedback_data = RatingFeedback::lists('feedback','rating_value');
-        if($criteria->count()>0)
-        {    
-            
-            foreach ($criteria as $key => $value) {
-                $rating_val =  isset($rating_value[$key])?$rating_value[$key]:'';
-                $date   =  date('m/d/Y',strtotime($value->updated_at)); 
-                //$rating_value = isset($rating_value[$key])?$rating_value[$key]:"";
-            
-                $data[] =  [ 
-                            'criteriaID'    => $value->id,
-                            'criteria'      => $value->interview_criteria,
-                            'ratingValue'   => $rating_val
-                         ];
-                   
-            }
-           
-            return  [   
-                        
-                        'interviewerDetail'     =>  $interviewerName,  
-                        'ratingDetail'          =>  $data,
-                    ];
-        }
-        return null;  
-
-    }
-
+  
 
    /* @method : get user details
     * @param : userid
@@ -567,10 +207,7 @@ class Helper {
         $data['userID'] = $user->userID;
         $data['firstName'] = $user->first_name;
         $data['lastName'] = $user->last_name;
-        //$data['email'] = $user->email;
-        //$data['positionID'] =  $user->positionID;
-        $data['positionName'] =  Helper::getPositionNameById($user->positionID);
-        return  $data;
+       return  $data;
     }
 /* @method : send Mail
     * @param : email
@@ -584,8 +221,8 @@ class Helper {
         
         return  Mail::send('emails.'.$template, array('content' => $template_content), function($message) use($email_content)
           {
-            $name = "Udex";
-            $message->from('udex@indianic.com',$name);  
+            $name = "admin";
+            $message->from('kundan.roy@webdunia.net',$name);  
             $message->to($email_content['receipent_email'])->subject($email_content['subject']);
             
           });
