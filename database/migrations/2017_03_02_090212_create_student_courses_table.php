@@ -14,12 +14,12 @@ class CreateStudentCoursesTable extends Migration
     {
         Schema::create('student_courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('course_name');
-            $table->string('course_code');
-            $table->integer('professior_id')->unsigned();
-            $table->integer('student_id')->unsigned();
-            $table->foreign('professior_id')->references('id')->on('users');
-            $table->foreign('student_id')->references('id')->on('users');
+            $table->string('course_name')->nullable();
+            $table->string('course_code')->nullable();
+            $table->integer('professior_id')->unsigned()->nullable();
+            $table->integer('student_id')->unsigned()->nullable();
+            $table->foreign('professior_id')->references('id')->on('users')->nullable();
+            $table->foreign('student_id')->references('id')->on('users')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

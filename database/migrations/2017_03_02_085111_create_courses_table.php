@@ -16,6 +16,11 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
             $table->string('course_name');
             $table->string('course_code');
+            $table->string('course_type');
+            $table->string('course_meeting_days');
+            $table->string('course_meeting_time');
+            $table->string('course_textbook');
+            $table->text('course_description');
             $table->integer('student_id')->unsigned();
             $table->integer('professior_id')->unsigned();
             $table->foreign('professior_id')->references('id')->on('users');
