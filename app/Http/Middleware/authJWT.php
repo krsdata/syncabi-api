@@ -14,7 +14,7 @@ class authJWT
     {    
         try {
            
-            $user = JWTAuth::toUser($request->input('deviceToken'));
+            $user = JWTAuth::toUser($request->input('token'));
         } catch (Exception $e) {
 
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){

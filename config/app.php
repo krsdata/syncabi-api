@@ -166,6 +166,8 @@ return [
        Modules\Admin\AdminServiceProvider::class , 
        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
        Barryvdh\DomPDF\ServiceProvider::class,
+       Way\Generators\GeneratorsServiceProvider::class,
+       Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
 
     ],
 
