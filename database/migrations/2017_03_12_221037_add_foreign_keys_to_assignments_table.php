@@ -14,8 +14,8 @@ class AddForeignKeysToAssignmentsTable extends Migration {
 	{
 		Schema::table('assignments', function(Blueprint $table)
 		{
-			$table->foreign('course_id')->references('id')->on('courses')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-			$table->foreign('professior_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+			$table->foreign('course_id')->references('id')->on('courses')->onUpdate('CASCADE')->onDelete('CASCADE');
+			$table->foreign('professor_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');;
 		});
 	}
 

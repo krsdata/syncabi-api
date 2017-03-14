@@ -14,7 +14,7 @@ class AddForeignKeysToProfessorProfilesTable extends Migration {
 	{
 		Schema::table('professor_profiles', function(Blueprint $table)
 		{
-			$table->foreign('professior_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+			$table->foreign('professor_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
 		});
 	}
 
@@ -28,7 +28,7 @@ class AddForeignKeysToProfessorProfilesTable extends Migration {
 	{
 		Schema::table('professor_profiles', function(Blueprint $table)
 		{
-			$table->dropForeign('professor_profiles_professior_id_foreign');
+			$table->dropForeign('professor_profiles_professor_id_foreign');
 		});
 	}
 

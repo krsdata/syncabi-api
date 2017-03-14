@@ -15,9 +15,9 @@ class CreateStudentCoursesTable extends Migration {
 		Schema::create('student_courses', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('course_name');
-			$table->string('course_code');
-			$table->integer('professior_id')->unsigned()->index('student_courses_professior_id_foreign');
+			$table->string('course_name')->unsigned();
+			$table->string('course_code')->unsigned();
+			$table->integer('professor_id')->unsigned()->index('student_courses_professor_id_foreign');
 			$table->integer('student_id')->unsigned()->index('student_courses_student_id_foreign');
 			$table->boolean('status')->default(1);
 			$table->timestamps();

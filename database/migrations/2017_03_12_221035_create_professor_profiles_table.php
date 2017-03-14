@@ -20,7 +20,7 @@ class CreateProfessorProfilesTable extends Migration {
 			$table->string('office_hours')->nullable();
 			$table->string('location')->nullable();
 			$table->text('email', 65535)->nullable();
-			$table->integer('professor_id')->unsigned()->index('professor_profiles_professior_id_foreign');
+			$table->integer('professor_id')->unsigned()->index('professor_profiles_professor_id_foreign');
 			$table->timestamps();
 		});
 	}

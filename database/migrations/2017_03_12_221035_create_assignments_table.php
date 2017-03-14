@@ -23,7 +23,7 @@ class CreateAssignmentsTable extends Migration {
 			$table->text('description', 65535)->nullable();
 			$table->char('grade', 1)->nullable();
 			$table->integer('marks')->nullable();
-			$table->integer('professior_id')->unsigned()->nullable()->index('assignments_professior_id_foreign');
+			$table->integer('professor_id')->unsigned()->nullable()->index('assignments_professor_id_foreign');
 			$table->timestamps();
 		});
 	}
