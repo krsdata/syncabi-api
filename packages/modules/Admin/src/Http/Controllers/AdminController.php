@@ -22,13 +22,17 @@ use Lang;
 use Validator;
 use App\Http\Requests;
 use App\Helpers\Helper as Helper;
-use Modules\Admin\Models\User;
+//use Modules\Admin\Models\User;
 use Modules\Admin\Models\CorporateProfile;
 use Modules\Admin\Models\Interview;
 use Modules\Admin\Models\Position;
 use App\Admin;
 use Illuminate\Http\Request;
 use Session;
+
+use App\User;
+use App\ProfessorProfile;
+use App\StudentProfile;
  
 /**
  * Class : AdminController
@@ -55,12 +59,11 @@ class AdminController extends Controller {
        // dd(Session::getId());
         $page_title = "";
         $page_action = "";
-        $total_user = User::count();
-        $total_company = CorporateProfile::groupBy('company_url')->get();
-        $total_company = $total_company->count();
-        $total_condidate = Interview::all()->count();
+        $professor = User::where('role_type',1)->count();
+         
+        $student = User::where('role_type',2)->count();  
         $viewPage = "Admin";
-        return view('packages::dashboard.index',compact('total_condidate','total_user','total_company','page_title','page_action','viewPage'));
+        return view('packages::dashboard.index',compact('professor','student','page_title','page_action','viewPage'));
     }
 
    public function profile(Request $request,Admin $users)
