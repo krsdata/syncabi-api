@@ -83,10 +83,9 @@
                                               <tbody>    
                                                 <tr>
                                                     <td>{{ ++$key }}</td>
-                                                    <td>{{ $user->id }}</td>
                                                     <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }} </td>
-                                                    <td>   {{ $user->user_type }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>{{ ($user->user_type==1)?'Professor':'Student' }} </td> 
                                                     <td>
                                                         {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>
