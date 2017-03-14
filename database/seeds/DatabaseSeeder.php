@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (Schema::hasTable('users'))
+        if (Schema::hasTable('admin'))
 		{
-		    DB::table('users')->insert([
+		    DB::table('admin')->insert([
 	            'name' => 'admin',
 	            'email' => 'admin@admin.com',
 	            'password' => bcrypt('admin'),
