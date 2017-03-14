@@ -10,7 +10,7 @@
     </div> 
 
     <div class="form-group{{ $errors->first('email', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Email</label>
+        <label class="col-lg-4 col-md-4 control-label">Email *</label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::email('email',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
             <span class="label label-danger">{{ $errors->first('email', ':message') }}</span>
@@ -30,11 +30,11 @@
             <span class="label label-danger">{{ $errors->first('password', ':message') }}</span>
         </div>
     </div>
-    <div class="form-group{{ $errors->first('user_type', ' has-error') }}">
+    <div class="form-group{{ $errors->first('role_type', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">User Type</label>
         <div class="col-lg-8 col-md-8"> 
-         {!! Form::text('user_type',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
-            <span class="label label-danger">{{ $errors->first('user_type', ':message') }}</span>
+           <label class="col-lg-4 col-md-4 control-label">{{ ($user->role_type==1)?'Professor':'student' }}</label>
+            <span class="label label-danger">{{ $errors->first('role_type', ':message') }}</span>
             @if(Session::has('flash_alert_notice')) 
             <span class="label label-danger">
                 {{ Session::get('flash_alert_notice') }} 

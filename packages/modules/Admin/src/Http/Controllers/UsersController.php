@@ -27,6 +27,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use App\Helpers\Helper;
 
+//use App\User;
+use App\ProfessorProfile;
+use App\StudentProfile;
+ 
+
 /**
  * Class AdminController
  */
@@ -128,7 +133,7 @@ class UsersController extends Controller {
 
         $page_title = 'User';
         $page_action = 'Show Users';
-        
+      
         return view('packages::users.user.edit', compact('user', 'page_title', 'page_action'));
     }
 
