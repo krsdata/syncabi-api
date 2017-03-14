@@ -115,6 +115,8 @@ class UsersController extends Controller {
      * */
 
     public function store(UserRequest $request, User $user) {
+
+        dd($user);
         $user->fill(Input::all());
         $user->password = Hash::make($request->get('password'));
         $user->save();
