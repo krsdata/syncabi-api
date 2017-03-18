@@ -46,7 +46,7 @@
         </a>
         <ul class="treeview-menu">
            <li class="{{ (isset($page_action) && $page_action=='Create Course')?"active":'' }}" ><a href="{{ route('course.create')}}"><i class="fa fa-user-plus"></i> Create Course</a></li>
-           <li class="{{ (isset($page_action) && $page_action=='View Course')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View Course</a></li>
+           <li class="{{ (isset($page_action) && $page_action=='View Course')?"active":'' }}"><a href="{{ route('course')}}"><i class="fa  fa-list"></i> View Course</a></li>
         </ul>
       </li>
 
