@@ -16,6 +16,7 @@ class AddColumnToCoursesTable extends Migration
                 $table->text('session_id')->nullable();
                 $table->text('general_info')->nullable();
                 $table->string('grade_weight')->nullable();
+                $table->string('created_by')->default('Admin');
         });
     }
 

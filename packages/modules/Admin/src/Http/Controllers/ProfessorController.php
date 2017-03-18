@@ -35,7 +35,7 @@ use App\StudentProfile;
 /**
  * Class AdminController
  */
-class UsersController extends Controller {
+class ProfessorController extends Controller {
     /**
      * @var  Repository
      */
@@ -47,7 +47,7 @@ class UsersController extends Controller {
      */
     public function __construct() {
         $this->middleware('admin');
-        View::share('viewPage', 'user');
+        View::share('viewPage', 'professor');
         View::share('helper',new Helper);
         $this->record_per_page = Config::get('app.record_per_page');
     }
@@ -60,8 +60,8 @@ class UsersController extends Controller {
 
     public function index(User $user, Request $request) 
     { 
-        $page_title = 'User';
-        $page_action = 'View User'; 
+        $page_title = 'Professor';
+        $page_action = 'View Professor'; 
         if ($request->ajax()) {
             $id = $request->get('id');
             $status = $request->get('status');
@@ -79,7 +79,7 @@ class UsersController extends Controller {
 
             $search = isset($search) ? Input::get('search') : '';
                
-            $users = User::where(function($query) use($search,$status) {
+            $users = User::where('role_type',1)->where(function($query) use($search,$status) {
                         if (!empty($search)) {
                             $query->Where('name', 'LIKE', "%$search%")
                                     ->OrWhere('email', 'LIKE', "%$search%");
@@ -90,13 +90,13 @@ class UsersController extends Controller {
                         }
                     })->Paginate($this->record_per_page);
         } else {
-            $users = User::orderBy('id','desc')->Paginate($this->record_per_page);
+            $users = User::where('role_type',1)->orderBy('id','desc')->Paginate($this->record_per_page);
             
         }
         //dd($users[0]->group);
        // dd($users[0]->position->position_name);
          //dd($users);
-        return view('packages::users.user.index', compact('status','users', 'page_title', 'page_action'));
+        return view('packages::users.professor.index', compact('status','users', 'page_title', 'page_action'));
     }
 
     /*
@@ -105,9 +105,9 @@ class UsersController extends Controller {
 
     public function create(User $user) 
     {
-        $page_title = 'User';
-        $page_action = 'Create User';
-        return view('packages::users.user.create', compact('position', 'user', 'page_title', 'page_action', 'groups'));
+        $page_title = 'Professor';
+        $page_action = 'Create Professor';
+        return view('packages::users.professor.create', compact('user', 'page_title', 'page_action', 'groups'));
     }
 
     /*
@@ -120,8 +120,8 @@ class UsersController extends Controller {
         $user->password = Hash::make($request->get('password'));
         $user->save();
         
-        return Redirect::to(route('user'))
-                            ->with('flash_alert_notice', 'New user was successfully created !');
+        return Redirect::to(route('professor'))
+                            ->with('flash_alert_notice', 'New Professor was successfully created !');
         }
 
     /*
@@ -132,10 +132,10 @@ class UsersController extends Controller {
 
     public function edit(User $user) {
 
-        $page_title = 'User';
-        $page_action = 'Show Users';
+        $page_title = 'Professor';
+        $page_action = 'Show Professor';
       
-        return view('packages::users.user.edit', compact('user', 'page_title', 'page_action'));
+        return view('packages::users.professor.edit', compact('user', 'page_title', 'page_action'));
     }
 
     public function update(Request $request, User $user) {
@@ -143,8 +143,8 @@ class UsersController extends Controller {
         $user->fill(Input::all());
         $user->password = Hash::make($request->get('password'));
         $user->save();
-        return Redirect::to(route('user'))
-                        ->with('flash_alert_notice', 'User was  successfully updated !');
+        return Redirect::to(route('professor'))
+                        ->with('flash_alert_notice', 'Professor was  successfully updated !');
     }
     /*
      *Delete User
@@ -155,8 +155,8 @@ class UsersController extends Controller {
         
         User::where('id',$user->id)->delete();
 
-        return Redirect::to(route('user'))
-                        ->with('flash_alert_notice', 'User was successfully deleted!');
+        return Redirect::to(route('professor'))
+                        ->with('flash_alert_notice', 'Professor was successfully deleted!');
     }
 
     public function show(User $user) {

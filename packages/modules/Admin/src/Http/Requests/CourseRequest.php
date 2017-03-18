@@ -5,7 +5,7 @@ namespace Modules\Admin\Http\Requests;
 use App\Http\Requests\Request;
 use Input;
 
-class UserRequest extends Request {
+class CourseRequest extends Request {
 
     /**
      * The metric validation rules.
@@ -21,19 +21,19 @@ class UserRequest extends Request {
                     }
                 case 'POST': {
                         return [
-                            'email'     => "required|email|unique:users,email" ,  
-                            'name'      => 'required', 
-                            'password'  => 'required|min:6',
-                            /*'confirm_password' => 'required|same:password'*/ 
+                            'course_name'   => "required" ,  
+                            'session_id' => 'required',
+                            'grade_weight' => 'required' 
                         ];
                     }
                 case 'PUT':
                 case 'PATCH': {
-                    if ( $user = $this->user ) {
+                    if ( $course = $this->course ) {
 
                         return [
-                            'email'   => "required|email" ,  
-                            'name' => 'required|min:3'
+                            'course_name'   => "required" ,  
+                            'session_id' => 'required',
+                            'grade_weight' => 'required' 
                         ];
                     }
                 }

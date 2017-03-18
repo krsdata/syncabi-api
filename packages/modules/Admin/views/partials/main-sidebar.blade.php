@@ -22,17 +22,48 @@
         </a>
           
       </li> 
-      <li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
+      <li class="treeview {{ (isset($page_action) && $page_title=='User' || $page_title=='Student' || $page_title=='Professor')?"active":'' }} ">
+        {{ $page_title }}
         <a href="#">
           <i class="fa fa-user"></i>
           <span>Manage Users</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <!-- <li class="{{ (isset($page_action) && $page_action=='Create User')?"active":'' }}" ><a href="{{ route('user.create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
-           --><li class="{{ (isset($page_action) && $page_action=='View User')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View User</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='Create User')?"active":'' }}" ><a href="{{ route('user.create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View User')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View All Users</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Student')?"active":'' }}"><a href="{{ route('student')}}"><i class="fa  fa-list"></i> View Students</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Professor')?"active":'' }}"><a href="{{ route('professor')}}"><i class="fa  fa-list"></i> View Professor</a></li>
+        
+          </ul>
+      </li>
+
+       <li class="treeview {{ (isset($page_action) && $page_title=='Course')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Course</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+           <li class="{{ (isset($page_action) && $page_action=='Create Course')?"active":'' }}" ><a href="{{ route('course.create')}}"><i class="fa fa-user-plus"></i> Create Course</a></li>
+           <li class="{{ (isset($page_action) && $page_action=='View Course')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View Course</a></li>
         </ul>
       </li>
+
+
+       <li class="treeview {{ (isset($page_action) && $page_title=='Assignment')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Assignment</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Assignment')?"active":'' }}" ><a href="{{ route('assignment.create')}}"><i class="fa fa-user-plus"></i> Create Assignment</a></li>
+           <li class="{{ (isset($page_action) && $page_action=='View Assignment')?"active":'' }}"><a href="{{ route('assignment')}}"><i class="fa  fa-list"></i> View Assignment</a></li>
+        </ul>
+      </li>
+
+
     </ul>
   </section>
   <!-- /.sidebar -->

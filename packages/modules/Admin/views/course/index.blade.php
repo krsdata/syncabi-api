@@ -19,16 +19,10 @@
                             <div class="row">
                                 <div class="box">
                                     <div class="box-header">
-                                        <form action="{{route('user')}}" method="get">
+                                        <form action="{{route('course')}}" method="get">
+                                             
                                             <div class="col-md-3">
-                                                <select name="status" class="form-control">
-                                                    <option value="">Sort by Status</option>
-                                                    <option value="active" @if($status==='active') selected  @endif>Active</option>
-                                                    <option value="inActive" @if($status==='inActive') selected  @endif>Inactive</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input value="{{ (isset($_REQUEST['search']))?$_REQUEST['search']:''}}" placeholder="search by Name/Email" type="text" name="search" id="search" class="form-control" >
+                                                <input value="{{ (isset($_REQUEST['search']))?$_REQUEST['search']:''}}" placeholder="Course name" type="text" name="search" id="search" class="form-control" >
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="submit" value="Search" class="btn btn-primary form-control">
@@ -36,15 +30,15 @@
                                            
                                         </form>
                                          <div class="col-md-2">
-                                             <a href="{{ route('user') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
+                                             <a href="{{ route('course') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
                                         </div>
                                        <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
-                                                <a href="{{ route('user.create')}}">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add User</button> 
+                                                <a href="{{ route('course.create')}}">
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Course</button> 
                                                 </a>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div><!-- /.box-header -->
 
                                     
@@ -60,14 +54,15 @@
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
                                                     <th>Sno</th>
-                                                    <th>Full Name</th>
-                                                    <th>Email</th>
-                                                    <th>User Type</th>  
+                                                    <th>Course Name</th> 
+                                                    <th>Session Id</th>  
+                                                    <th>General Info</th>
+                                                    <th>Grade weight</th>
                                                     <th>Signup Date</th>
-                                                    <th>Status</th>
+                                                   
                                                     <th>Action</th>
                                                 </tr>
-                                                @if(count($users)==0)
+                                                @if(count($course)==0)
                                                     <tr>
                                                       <td colspan="7">
                                                         <div class="alert alert-danger alert-dismissable">
@@ -78,38 +73,35 @@
                                                       </td>
                                                     </tr>
                                                   @endif
-                                                @foreach ($users as $key => $user)  
+                                                @foreach ($course as $key => $result)  
                                              <thead>
                                               <tbody>    
                                                 <tr>
                                                     <td>{{ ++$key }}</td>
-                                                    <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>{{ ($user->role_type==1)?'Professor':'Student' }} </td> 
+                                                    <td>{{ $result->course_name}}</td>
+                                                    <td>{{ $result->session_id}}</td> 
+                                                    <td>{{ $result->general_info}}</td>
+                                                    <td>{{ $result->grade_weight}} </td> 
                                                     <td>
-                                                        {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
+                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m-d-Y'); !!}
                                                     </td>
-                                                    <td>
-                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'user')" >
-                                                            {{ ($user->status==1)?'Active':'Inactive'}}
-                                                        </span>
-                                                    </td>
+                                                   
                                                     <td> 
-                                                        <a href="{{ route('user.edit',$user->id)}}">
+                                                        <a href="{{ route('course.edit',$result->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->id, 'route' => array('user.destroy', $user->id))) !!}
-                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$user->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('course.destroy', $result->id))) !!}
+                                                            <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
-                                                         {!! Form::close() !!}
+                                                        {!! Form::close() !!}
 
                                                     </td>
                                                 </tr>
                                                 @endforeach 
                                             </tbody></table>
                                     </div><!-- /.box-body --> 
-                                    <div class="center" align="center">  {!! $users->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
+                                    <div class="center" align="center">  {!! $course->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
                                 </div>
                             </div>
                         </div>

@@ -41,6 +41,8 @@
                       <a class="btn btn-default btn-flat" href="{{ url('logout')}}">Sign out</a>
                     </div>
                   </li>
+
+                  
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->

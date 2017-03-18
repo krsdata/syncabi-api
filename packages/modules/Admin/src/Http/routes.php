@@ -46,102 +46,81 @@
             ]
                 ]
         );
+
+
+        Route::bind('student', function($value, $route) {
+            return Modules\Admin\Models\User::find($value);
+        });
+
+        Route::resource('admin/student', 'Modules\Admin\Http\Controllers\StudentController', [
+            'names' => [
+                'edit' => 'student.edit',
+                'show' => 'student.show',
+                'destroy' => 'student.destroy',
+                'update' => 'student.update',
+                'store' => 'student.store',
+                'index' => 'student',
+                'create' => 'student.create',
+            ]
+                ]
+        );
+
+
+        Route::bind('professor', function($value, $route) {
+            return Modules\Admin\Models\User::find($value);
+        });
+
+        Route::resource('admin/professor', 'Modules\Admin\Http\Controllers\ProfessorController', [
+            'names' => [
+                'edit' => 'professor.edit',
+                'show' => 'professor.show',
+                'destroy' => 'professor.destroy',
+                'update' => 'professor.update',
+                'store' => 'professor.store',
+                'index' => 'professor',
+                'create' => 'professor.create',
+            ]
+                ]
+        );
+
+
         /*---------End---------*/   
 
-        /*------------Position Model and controller---------*/
-        Route::bind('position', function($value, $route) {
-            return Modules\Admin\Models\Position::find($value);
+         Route::bind('course', function($value, $route) {
+            return Modules\Admin\Models\Course::find($value);
         });
 
-        Route::resource('admin/position', 'Modules\Admin\Http\Controllers\PositionController', [
+        Route::resource('admin/course', 'Modules\Admin\Http\Controllers\CourseController', [
             'names' => [
-                'edit' => 'position.edit',
-                'show' => 'position.show',
-                'destroy' => 'position.destroy',
-                'update' => 'position.update',
-                'store' => 'position.store',
-                'index' => 'position',
-                'create' => 'position.create'
-            ]
-                ]
-        );
-        /*---------End---------*/  
-
-        /*------------Criteria Model and controller---------*/
-        Route::bind('criteria', function($value, $route) {
-            return Modules\Admin\Models\Criteria::find($value);
-        });
-
-        Route::resource('admin/criteria', 'Modules\Admin\Http\Controllers\CriteriaController', [
-            'names' => [
-                'edit' => 'criteria.edit',
-                'show' => 'criteria.show',
-                'destroy' => 'criteria.destroy',
-                'update' => 'criteria.update',
-                'store' => 'criteria.store',
-                'index' => 'criteria',
-                'create' => 'criteria.create'
-            ]
-                ]
-        );
-        /*----------End---------*/ 
-
-         /*------------Criteria Model and controller---------*/
-        Route::bind('corporateProfile', function($value, $route) {
-            return Modules\Admin\Models\CorporateProfile::find($value);
-        });
-
-        Route::resource('admin/corporateProfile', 'Modules\Admin\Http\Controllers\CorporateProfileController', [
-            'names' => [
-                'edit' => 'corporateProfile.edit',
-                'show' => 'corporateProfile.show',
-                'destroy' => 'corporateProfile.destroy',
-                'update' => 'corporateProfile.update',
-                'store' => 'corporateProfile.store',
-                'index' => 'corporateProfile',
-                'create' => 'corporateProfile.create'
-            ]
-                ]
-        );
-        
-         /*------------ratingFeedback Model and controller---------*/
-        Route::bind('ratingFeedback', function($value, $route) {
-            return Modules\Admin\Models\RatingFeedback::find($value);
-        });
-
-        Route::resource('admin/ratingFeedback', 'Modules\Admin\Http\Controllers\RatingFeedbackController', [
-            'names' => [
-                'edit' => 'ratingFeedback.edit',
-                'show' => 'ratingFeedback.show',
-                'destroy' => 'ratingFeedback.destroy',
-                'update' => 'ratingFeedback.update',
-                'store' => 'ratingFeedback.store',
-                'index' => 'ratingFeedback',
-                'create' => 'ratingFeedback.create'
+                'edit' => 'course.edit',
+                'show' => 'course.show',
+                'destroy' => 'course.destroy',
+                'update' => 'course.update',
+                'store' => 'course.store',
+                'index' => 'course',
+                'create' => 'course.create',
             ]
                 ]
         );
 
-          /*------------ratingFeedback Model and controller---------*/
-        Route::bind('defaultCriteria', function($value, $route) {
-            return Modules\Admin\Models\DefaultCriteria::find($value);
+        Route::bind('assignment', function($value, $route) {
+            return Modules\Admin\Models\Assignment::find($value);
         });
 
-        Route::resource('admin/defaultCriteria', 'Modules\Admin\Http\Controllers\DefaultCriteriaController', [
+        Route::resource('admin/assignment', 'Modules\Admin\Http\Controllers\AssignmentController', [
             'names' => [
-                'edit' => 'defaultCriteria.edit',
-                'show' => 'defaultCriteria.show',
-                'destroy' => 'defaultCriteria.destroy',
-                'update' => 'defaultCriteria.update',
-                'store' => 'defaultCriteria.store',
-                'index' => 'defaultCriteria',
-                'create' => 'defaultCriteria.create'
+                'edit'      => 'assignment.edit',
+                'show'      => 'assignment.show',
+                'destroy'   => 'assignment.destroy',
+                'update'    => 'assignment.update',
+                'store'     => 'assignment.store',
+                'index'     => 'assignment',
+                'create'    => 'assignment.create',
             ]
                 ]
         );
 
-        Route::get('admin/getDirectory/{id}', 'Modules\Admin\Http\Controllers\InterviewController@index'); 
-        Route::resource('admin/getDirectory','Modules\Admin\Http\Controllers\CorporateProfileController@show');
+
         Route::get('admin/corporateUser/{name}','Modules\Admin\Http\Controllers\CorporateProfileController@corporateUser');
         Route::get('admin/recentInterview/{id}', 'Modules\Admin\Http\Controllers\InterviewController@recentInterview'); 
         Route::get('admin/condidateDirectory', 'Modules\Admin\Http\Controllers\InterviewController@condidateDirectory'); 

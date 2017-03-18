@@ -36,12 +36,12 @@
                                            
                                         </form>
                                          <div class="col-md-2">
-                                             <a href="{{ route('user') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
+                                             <a href="{{ route('professor') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
                                         </div>
                                        <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
-                                                <a href="{{ route('user.create')}}">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add User</button> 
+                                                <a href="{{ route('professor.create')}}">
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Professor</button> 
                                                 </a>
                                             </div>
                                         </div> 
@@ -62,7 +62,7 @@
                                                     <th>Sno</th>
                                                     <th>Full Name</th>
                                                     <th>Email</th>
-                                                    <th>User Type</th>  
+                                                    <th>Role Type</th>  
                                                     <th>Signup Date</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -95,11 +95,11 @@
                                                         </span>
                                                     </td>
                                                     <td> 
-                                                        <a href="{{ route('user.edit',$user->id)}}">
+                                                        <a href="{{ route('professor.edit',$user->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->id, 'route' => array('user.destroy', $user->id))) !!}
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->id, 'route' => array('professor.destroy', $user->id))) !!}
                                                         <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$user->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                          {!! Form::close() !!}

@@ -39,7 +39,7 @@ class User extends Authenticatable {
                             'phone',
                             'mobile',
                             'email', 
-                            'user_type',
+                            'role_type',
                             'remember_token'
                         ];  // All field of user table here    
 
@@ -52,5 +52,7 @@ class User extends Authenticatable {
     protected $hidden = [
         'password', 'remember_token'
     ];
+
+    protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
 }
