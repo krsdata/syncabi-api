@@ -1,9 +1,31 @@
 
 <div class="col-md-6">
  
+<!-- 
+    <div class="form-group{{ $errors->first('syllabus_id', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Select Syllabus </label>
+        <div class="col-lg-8 col-md-8"> 
+           <select name="syllabus_id" class="form-control form-cascade-control">
+            @foreach($syllabus  as $key=>$value)
+            
+            <option value="{{$value->id}}" {{($value->id == $assignment->syllabus_id)?"selected":""}}>{{ $value->syllabus_title }}</option>
+            @endforeach
+            </select>
+            <span class="label label-danger">{{ $errors->first('syllabus_id', ':message') }}</span>
+        </div>
+    </div>   -->
 
-    <div class="form-group{{ $errors->first('course_id', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Choose Course ID</label>
+ 
+     <div class="form-group{{ $errors->first('syllabus_id', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Select Syllabus </label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::select('syllabus_id',$syllabi, ($assignment->syllabus_id)?$assignment->syllabus_id:null,['class' => 'form-control form-cascade-control input-small'])  !!}
+            <span class="label label-danger">{{ $errors->first('syllabus_id', ':message') }}</span>
+        </div>
+    </div> 
+
+<!--     <div class="form-group{{ $errors->first('course_id', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Select Course </label>
         <div class="col-lg-8 col-md-8"> 
            <select name="course_id" class="form-control form-cascade-control">
             @foreach($course  as $key=>$value)
@@ -13,7 +35,7 @@
             </select>
             <span class="label label-danger">{{ $errors->first('course_id', ':message') }}</span>
         </div>
-    </div>  
+    </div>   -->
 
 
     <div class="form-group{{ $errors->first('paper_title', ' has-error') }}">

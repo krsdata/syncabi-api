@@ -21,7 +21,8 @@ class SyllabusRequest extends Request {
                     }
                 case 'POST': {
                         return [
-                            'syllabus_title'   => "required"  
+                            'syllabus_title'   => "required",
+                            'grade_weight'  =>  'required'  
                         ];
                     }
                 case 'PUT':
@@ -29,7 +30,8 @@ class SyllabusRequest extends Request {
                     if ( $syllabus = $this->syllabus ) {
 
                         return [
-                            'syllabus_title'   => "required" 
+                            'syllabus_title'   => "required",
+                            'grade_weight'  =>  'required'  
                         ];
                     }
                 }

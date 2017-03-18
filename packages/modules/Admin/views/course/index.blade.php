@@ -53,11 +53,10 @@
                                    <div class="box-body table-responsive no-padding" >
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
-                                                    <th>Sno</th>
-                                                    <th>Course Id</th> 
+                                                    <th>Course Id</th>
+                                                    <th>Course </th> 
                                                     <th>Session Id</th>  
-                                                    <th>General Info</th>
-                                                    <th>Grade weight</th>
+                                                    <th>General Info</th> 
                                                     <th>Created Date</th>
                                                    
                                                     <th>Action</th>
@@ -80,8 +79,7 @@
                                                     <td>{{ ++$key }}</td>
                                                     <td>{{ $result->course_name}}</td>
                                                     <td>{{ $result->session_id}}</td> 
-                                                    <td>{{ $result->general_info}}</td>
-                                                    <td>{{ $result->grade_weight}} </td> 
+                                                    <td>{{ $result->general_info}}</td> 
                                                     <td>
                                                         {!! Carbon\Carbon::parse($result->created_at)->format('m-d-Y'); !!}
                                                     </td>

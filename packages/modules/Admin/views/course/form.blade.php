@@ -49,7 +49,7 @@
         </div>
     </div>
 
-
+<!-- 
     <div class="form-group{{ $errors->first('grade_weight', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Grade weight *</label>
         <div class="col-lg-8 col-md-8"> 
@@ -61,12 +61,7 @@
             </span>@endif
         </div>
     </div>  
-
-        
-
- 
-
-      
+ --> 
     
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>
@@ -74,7 +69,7 @@
 
             {!! Form::submit(' Save ', ['class'=>'btn  btn-primary text-white','id'=>'saveBtn']) !!}
 
-            <a href="{{route('user')}}">
+            <a href="{{route('course')}}">
             {!! Form::button('Back', ['class'=>'btn btn-warning text-white']) !!} </a>
         </div>
     </div>

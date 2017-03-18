@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\AssignmentRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Assignment;
-use Modules\Admin\Models\Syllabus;
 use Input;
 use Validator;
 use Auth;
@@ -87,7 +86,8 @@ class AssignmentController extends Controller {
         } else {
             $assignment = Assignment::with('user')->with('course')->orderBy('id','desc')->Paginate($this->record_per_page);
             
-        } 
+        }
+         
 
         return view('packages::assignment.index', compact('assignment','status','users', 'page_title', 'page_action'));
     }
@@ -102,28 +102,19 @@ class AssignmentController extends Controller {
         $page_action    =   'Create Assignment';
         $users          =   User::where('role_type',1)->get();
         $course         =   Course::all();
-        $syllabus       =   Syllabus::all();
-
-        $syl    = Syllabus::with('course')->get();
-        $syllabi = [];
-        foreach ($syl as $key => $value) {
-             $syllabi[$value->course->course_name][$value->id] = $value->syllabus_title;
-        }
-         
-        return view('packages::assignment.create', compact('syllabi','syllabus','assignment','users','course', 'page_title', 'page_action'));
+        return view('packages::assignment.create', compact('assignment','users','course', 'page_title', 'page_action'));
     }
 
     /*
      * Save Group method
      * */
 
-    public function store(AssignmentRequest $request, Assignment $assignment) 
-    {
-         
-        $sid =  Syllabus::with('course')->where('id',$request->get('syllabus_id'))->first(); 
+    public function store(AssignmentRequest $request, Assignment $assignment) {
+        $cid = Course::find($request->get('course_id')); 
+
+
         $assignment->fill(Input::all()); 
-        $assignment->professor_id = $sid->course->professor_id; 
-        $assignment->course_id = $sid->course_id;
+        $assignment->professor_id = $cid->professor_id; 
         $assignment->save(); 
         return Redirect::to(route('assignment'))
                             ->with('flash_alert_notice', 'New user was successfully created !');
@@ -137,18 +128,11 @@ class AssignmentController extends Controller {
 
     public function edit(Assignment $assignment) {
 
-        $page_title     = 'Assignment';
-        $page_action    = 'Show Assignment';
+        $page_title = 'Assignment';
+        $page_action = 'Show Assignment';
         $users          =   User::where('role_type',1)->get();
         $course         =   Course::all();
-        $syllabus       =   Syllabus::all();
-        $syl    = Syllabus::with('course')->get();
-        $syllabi = [];
-        foreach ($syl as $key => $value) {
-             $syllabi[$value->course->course_name][$value->id] = $value->syllabus_title;
-        }
-        
-        return view('packages::assignment.edit', compact('syllabi','syllabus','assignment','users','course', 'page_title', 'page_action'));
+        return view('packages::assignment.edit', compact('assignment','users','course', 'page_title', 'page_action'));
    
     }
 

@@ -86,7 +86,7 @@
 
         /*---------End---------*/   
 
-         Route::bind('course', function($value, $route) {
+        Route::bind('course', function($value, $route) {
             return Modules\Admin\Models\Course::find($value);
         });
 

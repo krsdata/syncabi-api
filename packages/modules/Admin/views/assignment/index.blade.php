@@ -53,8 +53,8 @@
                                    <div class="box-body table-responsive no-padding" >
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
-                                                    <th>Sno</th>
-                                                    <th>Course Name</th> 
+                                                    <th>ID</th>
+                                                    <th>Course </th> 
                                                     <th>Paper Title</th>  
                                                     <th>Duration</th>
                                                     <th>Chapter</th>

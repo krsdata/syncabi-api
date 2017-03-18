@@ -21,9 +21,8 @@ class CourseRequest extends Request {
                     }
                 case 'POST': {
                         return [
-                            'course_name'   => "required" ,  
                             'session_id' => 'required',
-                            'grade_weight' => 'required' 
+                            'course_name'   =>  'required' 
                         ];
                     }
                 case 'PUT':
@@ -31,9 +30,8 @@ class CourseRequest extends Request {
                     if ( $course = $this->course ) {
 
                         return [
-                            'course_name'   => "required" ,  
                             'session_id' => 'required',
-                            'grade_weight' => 'required' 
+                            'course_name'   =>  'required' 
                         ];
                     }
                 }

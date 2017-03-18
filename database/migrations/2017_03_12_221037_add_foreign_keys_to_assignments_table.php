@@ -15,6 +15,7 @@ class AddForeignKeysToAssignmentsTable extends Migration {
 		Schema::table('assignments', function(Blueprint $table)
 		{
 			$table->foreign('course_id')->references('id')->on('courses')->onUpdate('CASCADE')->onDelete('CASCADE');
+			$table->foreign('syllabus_id')->references('id')->on('syllabus')->onUpdate('CASCADE')->onDelete('CASCADE');
 			$table->foreign('professor_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');;
 		});
 	}
@@ -30,6 +31,7 @@ class AddForeignKeysToAssignmentsTable extends Migration {
 		Schema::table('assignments', function(Blueprint $table)
 		{
 			$table->dropForeign('assignments_course_id_foreign');
+			$table->dropForeign('assignments_syllabus_id_foreign');
 			$table->dropForeign('assignments_professior_id_foreign');
 		});
 	}

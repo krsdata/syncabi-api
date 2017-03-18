@@ -22,7 +22,8 @@ class AssignmentRequest extends Request {
                         return [
                             'chapter'       => "required" ,  
                             'paper_title'   => 'required',
-                            'duration'      => 'required' 
+                            'duration'      => 'required',
+                            'due_date'      =>  'required'
                         ];
                     }
                 case 'PUT':
@@ -32,7 +33,8 @@ class AssignmentRequest extends Request {
                         return [
                             'chapter'       => "required" ,  
                             'paper_title'   => 'required',
-                            'duration'      => 'required'
+                            'duration'      => 'required',
+                            'due_date'      =>  'required'
                         ];
                     }
                 }

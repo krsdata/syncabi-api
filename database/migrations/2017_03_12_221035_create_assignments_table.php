@@ -16,6 +16,7 @@ class CreateAssignmentsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('course_id')->unsigned()->nullable()->index('assignments_course_id_foreign');
+			$table->integer('syllabus_id')->unsigned()->nullable()->index('assignments_syllabus_id_foreign');  
 			$table->string('paper_title')->nullable();
 			$table->string('duration')->nullable();
 			$table->string('chapter')->nullable();

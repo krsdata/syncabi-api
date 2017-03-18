@@ -35,7 +35,9 @@ Route::group(['prefix' => 'api/v1'], function()
            Route::match(['post','get'],'get_interviewer','ApiController@getInterviewer');
            Route::match(['post','get'],'add_interview','ApiController@addInterview');
            Route::match(['post','get'],'user/details','ApiController@getUserDetails');
-        });            
+        });   
+
+        
             
     });
 });    

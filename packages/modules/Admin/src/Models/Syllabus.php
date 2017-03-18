@@ -30,7 +30,7 @@ class Syllabus extends Model
  
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
-    protected $fillable = ['id','syllabus_title','syllabus_description','course_id']; 
+    protected $fillable = ['id','syllabus_title','syllabus_description','course_id','grade_weight']; 
 
     public function course() 
     {

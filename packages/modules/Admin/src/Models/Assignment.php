@@ -29,7 +29,7 @@ class Assignment extends Model
  
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
-    protected $fillable = ['id','course_id','paper_title','duration','status','chapter','type','description','grade','marks','due_date']; 
+    protected $fillable = ['id','course_id','paper_title','duration','status','chapter','type','description','grade','marks','due_date','syllabus_id']; 
     
     public function user()
     {

@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -52,8 +52,8 @@ class SyllabusController extends Controller {
         $this->record_per_page = Config::get('app.record_per_page');
     }
 
-    protected $syllabus;
- 
+    protected $users;
+
     /*
      * Dashboard
      * */
@@ -110,7 +110,7 @@ class SyllabusController extends Controller {
 
     public function store(SyllabusRequest $request, Syllabus $syllabus) 
     { 
-              
+            
         $syllabus->fill(Input::all());
         $syllabus->save();
         
@@ -124,17 +124,16 @@ class SyllabusController extends Controller {
      * object : $user
      * */
 
-    public function edit(Syllabus $syllabus) { 
+    public function edit(Syllabus $syllabus) {
 
         $page_title  = 'Syllabus';
         $page_action = 'Show Syllabus';
         $course      =   Course::all();
-        
         return view('packages::syllabus.edit', compact('course','syllabus', 'page_title', 'page_action'));
     }
 
-    public function update(SyllabusRequest $request, Syllabus $syllabus) 
-    {    
+    public function update(SyllabusRequest $request, Course $syllabus) 
+    {
         $syllabus->fill(Input::all()); 
         $syllabus->save();
         return Redirect::to(route('syllabus'))

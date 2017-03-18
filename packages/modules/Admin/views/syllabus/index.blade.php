@@ -57,6 +57,7 @@
                                                     <th>Course Id</th> 
                                                     <th>Syllabus Title</th> 
                                                     <th>Syllabus Desc</th> 
+                                                     <th>Grade Weight</th> 
                                                     <th>Created Date</th> 
                                                     <th>Action</th>
                                                 </tr>
@@ -79,6 +80,7 @@
                                                     <td>{{ $result->course->course_name}} </td>
                                                     <td>{{ $result->syllabus_title}}</td>
                                                     <td>{{ $result->syllabus_description}}</td>   
+                                                    <td>{{ $result->grade_weight}}</td>   
                                                     <td>
                                                         {!! Carbon\Carbon::parse($result->created_at)->format('m/d/Y'); !!}
                                                     </td>

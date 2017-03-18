@@ -30,7 +30,7 @@ class Course extends Model
  
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
-    protected $fillable = ['id','course_name','course_code','professor_id','status','session_id','general_info','grade_weight']; 
+    protected $fillable = ['id','course_name','course_code','professor_id','status','session_id','general_info']; 
 
     public function user() 
     {
