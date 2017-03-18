@@ -149,10 +149,8 @@ class AssignmentController extends Controller {
      * 
      */
     public function destroy(Assignment $assignment) {
-        
         Assignment::where('id',$assignment->id)->delete();
-
-        return Redirect::to(route('Assignment'))
+        return Redirect::to(route('assignment'))
                         ->with('flash_alert_notice', 'Assignment was successfully deleted!');
     }
 
