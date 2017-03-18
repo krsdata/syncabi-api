@@ -109,7 +109,7 @@ class CourseController extends Controller {
 
     public function store(CourseRequest $request, Course $course) 
     { 
-            
+           
         $course->fill(Input::all());
         $course->save();
         
@@ -145,7 +145,7 @@ class CourseController extends Controller {
      */
     public function destroy(Course $course) {
         
-        User::where('userID',$course->id)->delete();
+        Course::where('id',$course->id)->delete();
 
         return Redirect::to(route('course'))
                         ->with('flash_alert_notice', 'Course was successfully deleted!');

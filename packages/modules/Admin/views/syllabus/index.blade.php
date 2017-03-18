@@ -35,7 +35,7 @@
                                        <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
                                                 <a href="{{ route('syllabus.create')}}">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Course</button> 
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i>  Create Syllabus</button> 
                                                 </a>
                                             </div>
                                         </div>
@@ -55,14 +55,12 @@
                                             <thead><tr>
                                                     <th>Sno</th>
                                                     <th>Course Id</th> 
-                                                    <th>Session Id</th>  
-                                                    <th>General Info</th>
-                                                    <th>Grade weight</th>
-                                                    <th>Created Date</th>
-                                                   
+                                                    <th>Syllabus Title</th> 
+                                                    <th>Syllabus Desc</th> 
+                                                    <th>Created Date</th> 
                                                     <th>Action</th>
                                                 </tr>
-                                                @if(count($course)==0)
+                                                @if(count($syllabus)==0)
                                                     <tr>
                                                       <td colspan="7">
                                                         <div class="alert alert-danger alert-dismissable">
@@ -73,25 +71,24 @@
                                                       </td>
                                                     </tr>
                                                   @endif
-                                                @foreach ($course as $key => $result)  
+                                                @foreach ($syllabus as $key => $result)  
                                              <thead>
                                               <tbody>    
                                                 <tr>
                                                     <td>{{ ++$key }}</td>
-                                                    <td>{{ $result->course_name}}</td>
-                                                    <td>{{ $result->session_id}}</td> 
-                                                    <td>{{ $result->general_info}}</td>
-                                                    <td>{{ $result->grade_weight}} </td> 
+                                                    <td>{{ $result->course->course_name}} </td>
+                                                    <td>{{ $result->syllabus_title}}</td>
+                                                    <td>{{ $result->syllabus_description}}</td>   
                                                     <td>
-                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m-d-Y'); !!}
+                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m/d/Y'); !!}
                                                     </td>
                                                    
                                                     <td> 
-                                                        <a href="{{ route('course.edit',$result->id)}}">
+                                                        <a href="{{ route('syllabus.edit',$result->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('course.destroy', $result->id))) !!}
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('syllabus.destroy', $result->id))) !!}
                                                             <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                         {!! Form::close() !!}
@@ -101,7 +98,7 @@
                                                 @endforeach 
                                             </tbody></table>
                                     </div><!-- /.box-body --> 
-                                    <div class="center" align="center">  {!! $course->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
+                                    <div class="center" align="center">  {!! $syllabus->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
                                 </div>
                             </div>
                         </div>

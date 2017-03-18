@@ -51,6 +51,19 @@
       </li>
 
 
+       <li class="treeview {{ (isset($page_action) && $page_title=='Syllabus')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Syllabus</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+           <li class="{{ (isset($page_action) && $page_action=='Create Syllabus')?"active":'' }}" ><a href="{{ route('syllabus.create')}}"><i class="fa fa-user-plus"></i> Create Syllabus</a></li>
+           <li class="{{ (isset($page_action) && $page_action=='View Syllabus')?"active":'' }}"><a href="{{ route('syllabus')}}"><i class="fa  fa-list"></i> View Syllabus</a></li>
+        </ul>
+      </li>
+
+
        <li class="treeview {{ (isset($page_action) && $page_title=='Assignment')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>

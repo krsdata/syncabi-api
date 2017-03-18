@@ -103,6 +103,25 @@
                 ]
         );
 
+
+          Route::bind('syllabus', function($value, $route) {
+            return Modules\Admin\Models\Syllabus::find($value);
+        });
+
+        Route::resource('admin/syllabus', 'Modules\Admin\Http\Controllers\SyllabusController', [
+            'names' => [
+                'edit' => 'syllabus.edit',
+                'show' => 'syllabus.show',
+                'destroy' => 'syllabus.destroy',
+                'update' => 'syllabus.update',
+                'store' => 'syllabus.store',
+                'index' => 'syllabus',
+                'create' => 'syllabus.create',
+            ]
+                ]
+        );
+
+
         Route::bind('assignment', function($value, $route) {
             return Modules\Admin\Models\Assignment::find($value);
         });
