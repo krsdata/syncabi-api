@@ -107,7 +107,7 @@ class AssignmentController extends Controller {
         $syl    = Syllabus::with('course')->get();
         $syllabi = [];
         foreach ($syl as $key => $value) {
-             $syllabi[$value->course->course_name][$value->id] = $value->syllabus_title;
+             $syllabi[$value->course->course_name][$value->id] = ucfirst($value->syllabus_title);
         }
          
         return view('packages::assignment.create', compact('syllabi','syllabus','assignment','users','course', 'page_title', 'page_action'));
@@ -145,7 +145,7 @@ class AssignmentController extends Controller {
         $syl    = Syllabus::with('course')->get();
         $syllabi = [];
         foreach ($syl as $key => $value) {
-             $syllabi[$value->course->course_name][$value->id] = $value->syllabus_title;
+             $syllabi[$value->course->course_name][$value->id] =ucfirst($value->syllabus_title);
         }
         
         return view('packages::assignment.edit', compact('syllabi','syllabus','assignment','users','course', 'page_title', 'page_action'));
