@@ -1,21 +1,9 @@
 
 <div class="col-md-6">
-
-        <div class="form-group{{ $errors->first('professor_id', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Professior Name</label>
-        <div class="col-lg-8 col-md-8"> 
-           <select name="professor_id" class="form-control form-cascade-control">
-            @foreach($users  as $key=>$value)
-            
-            <option value="{{$value->id}}" {{($value->id == $assignment->professor_id)?"selected":""}}>{{ $value->name }}</option>
-            @endforeach
-            </select>
-            <span class="label label-danger">{{ $errors->first('professor_id', ':message') }}</span>
-        </div>
-    </div>  
+ 
 
     <div class="form-group{{ $errors->first('course_id', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Course Name</label>
+        <label class="col-lg-4 col-md-4 control-label">Choose Course ID</label>
         <div class="col-lg-8 col-md-8"> 
            <select name="course_id" class="form-control form-cascade-control">
             @foreach($course  as $key=>$value)
@@ -96,8 +84,28 @@
             </span>@endif
         </div>
     </div> 
-      
+
+       <div class="form-group{{ $errors->first('due_date', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Due Date *</label>
+        <div class="col-lg-8 col-md-8 date"> 
+ 
+            {!! Form::text('due_date',null, ['class' => 'form-control form-cascade-control input-small','id'=>'datepicker'])  !!} 
+            <i class="fa fa-calendar" style="
+    position: absolute;
+    top: 10px; 
+    right: 20px;"></i>
+            <span class="label label-danger">{{ $errors->first('due_date', ':message') }}</span>
+            @if(Session::has('flash_alert_notice')) 
+            <span class="label label-danger"> 
+                {{ Session::get('flash_alert_notice') }}  
+            </span>@endif
+        </div>
+    </div> 
     
+ 
+    
+
+
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>
         <div class="col-lg-8 col-md-8">

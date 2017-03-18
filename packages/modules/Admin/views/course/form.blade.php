@@ -1,8 +1,24 @@
 
 <div class="col-md-6">
 
+
+     <div class="form-group{{ $errors->first('professor_id', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Select professor </label>
+        <div class="col-lg-8 col-md-8"> 
+           <select name="professor_id" class="form-control form-cascade-control">
+            @foreach($users as $key=>$value)
+            
+            <option value="{{$value->id}}" {{($value->id ==$course->professor_id)?"selected":""}}>{{ $value->name }}</option>
+            @endforeach
+            </select>
+            <span class="label label-danger">{{ $errors->first('professor_id', ':message') }}</span>
+        </div>
+    </div> 
+   
+
+
     <div class="form-group{{ $errors->first('course_name', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label"> Course Name <span class="error">*</span></label>
+        <label class="col-lg-4 col-md-4 control-label"> Course Title <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::text('course_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
             <span class="label label-danger">{{ $errors->first('course_name', ':message') }}</span>
@@ -46,25 +62,7 @@
         </div>
     </div>  
 
-    @if(auth()->guard('admin')->user()->id!=1)
-    
-         <div class="form-group{{ $errors->first('professor_id', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Professor Name</label>
-        <div class="col-lg-8 col-md-8"> 
-           <select name="professor_id" class="form-control form-cascade-control">
-            @foreach($users as $key=>$value)
-            
-            <option value="{{$value->id}}" {{($value->id ==$course->professor_id)?"selected":""}}>{{ $value->name }}</option>
-            @endforeach
-            </select>
-            <span class="label label-danger">{{ $errors->first('professor_id', ':message') }}</span>
-        </div>
-    </div>
-     {!! Form::hidden('created_by','Professor', ['class' => 'form-control form-cascade-control input-small'])  !!}
-    @else
-        {!! Form::hidden('created_by','Admin', ['class' => 'form-control form-cascade-control input-small'])  !!}
-    @endif
-   
+        
 
  
 

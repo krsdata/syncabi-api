@@ -62,6 +62,12 @@
         var url = "{{ url('admin') }}";
         var email_req = '{{ Lang::get('immoclick-lang.email_req') }}';
         var password_req = '{{ Lang::get('immoclick-lang.password_req') }}';
+        $(function(){
+             $('#datepicker').datepicker({
+              autoclose: true
+            }); 
+        }); 
+
     </script>  
   
 </script>

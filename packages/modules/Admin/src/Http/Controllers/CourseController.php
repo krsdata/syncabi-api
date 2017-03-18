@@ -99,8 +99,8 @@ class CourseController extends Controller {
     {
         $page_title     =   'Course';
         $page_action    =   'Create Course';
-        $users           =   User::all();
-        return view('packages::course.create', compact('position', 'users','course', 'page_title', 'page_action'));
+        $users           =   User::where('role_type',1)->get();
+        return view('packages::course.create', compact('users','course', 'page_title', 'page_action'));
     }
 
     /*

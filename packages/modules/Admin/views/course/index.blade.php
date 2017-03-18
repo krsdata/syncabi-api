@@ -54,7 +54,7 @@
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
                                                     <th>Sno</th>
-                                                    <th>Course Name</th> 
+                                                    <th>Course Id</th> 
                                                     <th>Session Id</th>  
                                                     <th>General Info</th>
                                                     <th>Grade weight</th>

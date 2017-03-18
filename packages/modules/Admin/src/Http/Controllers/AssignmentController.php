@@ -110,8 +110,11 @@ class AssignmentController extends Controller {
      * */
 
     public function store(AssignmentRequest $request, Assignment $assignment) {
-       
+        $cid = Course::find($request->get('course_id')); 
+
+
         $assignment->fill(Input::all()); 
+        $assignment->professor_id = $cid->professor_id; 
         $assignment->save(); 
         return Redirect::to(route('assignment'))
                             ->with('flash_alert_notice', 'New user was successfully created !');

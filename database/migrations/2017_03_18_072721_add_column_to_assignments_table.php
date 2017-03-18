@@ -13,7 +13,7 @@ class AddColumnToAssignmentsTable extends Migration
     public function up()
     {
         Schema::table('assignments', function (Blueprint $table) {
-            $table->dateTime('do_date')->nullable();
+            $table->dateTime('due_date')->nullable();
         });
     }
 

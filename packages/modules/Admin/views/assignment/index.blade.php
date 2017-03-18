@@ -60,7 +60,7 @@
                                                     <th>Chapter</th>
                                                     <th>Type</th>
                                                     <th>Grade</th>
-                                                    <th>Professor</th>
+                                                    <th>Due Date</th>
                                                     <th>Created Date</th> 
                                                     <th>Action</th>
                                                 </tr>
@@ -86,9 +86,9 @@
                                                     <td>{{ $result->chapter}} </td> 
                                                     <td>{{ $result->type}} </td> 
                                                     <td>{{ $result->grade}} </td> 
-                                                    <td>{{ $result->user->name}} </td> 
+                                                    <td>{{ $result->due_date}} </td> 
                                                     <td>
-                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m-d-Y'); !!}
+                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m/d/Y'); !!}
                                                     </td>
                                                    
                                                     <td> 
