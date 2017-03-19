@@ -56,18 +56,7 @@ class CourseController extends Controller {
 
     public function index(Course $course, Request $request) 
     { 
-        $page_title = 'Course';
-        $page_action = 'View Course'; 
-        if ($request->ajax()) {
-            $id = $request->get('id');
-            $status = $request->get('status');
-            $user = Course::find($id);
-            $s = ($status == 1) ? $status = 0 : $status = 1;
-            $user->status = $s;
-            $user->save();
-            echo $s;
-            exit();
-        }
+       
         // Search by name ,email and group
         $course_name = Input::get('course_name');
         $professor_id = Input::get('professor_id');
