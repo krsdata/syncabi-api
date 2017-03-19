@@ -1,28 +1,28 @@
 <?php
-      Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
-      Route::get('admin/forgot-password','Modules\Admin\Http\Controllers\AuthController@forgetPassword');
-      Route::post('password/email','Modules\Admin\Http\Controllers\AuthController@sendResetPasswordLink');
-      Route::get('admin/password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword');  
-      Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
-        
-      Route::post('admin/login',function(App\Admin $user){
-       
-        $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')]; 
-        
-       // $credentials = ['email' => 'kundan@gmail.com', 'password' => 123456]; 
-        $auth = auth()->guard('admin');
-        
+    Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
+    Route::get('admin/forgot-password','Modules\Admin\Http\Controllers\AuthController@forgetPassword');
+    Route::post('password/email','Modules\Admin\Http\Controllers\AuthController@sendResetPasswordLink');
+    Route::get('admin/password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword');  
+    Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
 
-            if ($auth->attempt($credentials)) {
-                return Redirect::to('admin');
-            }else{ 
-               //return Redirect::to('admin/login')->withError(['message'=>'Invalid Credential!']);
-                return redirect()
-                            ->back()
-                            ->withInput()  
-                            ->withErrors(['message'=>'Invalid email or password. Try again!']);
-                } 
-        }); 
+    Route::post('admin/login',function(App\Admin $user){
+   
+    $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')]; 
+    
+   // $credentials = ['email' => 'kundan@gmail.com', 'password' => 123456]; 
+    $auth = auth()->guard('admin');
+    
+
+        if ($auth->attempt($credentials)) {
+            return Redirect::to('admin');
+        }else{ 
+           //return Redirect::to('admin/login')->withError(['message'=>'Invalid Credential!']);
+            return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Invalid email or password. Try again!']);
+            } 
+    }); 
       
     Route::group(['middleware' => ['admin']], function () { 
 

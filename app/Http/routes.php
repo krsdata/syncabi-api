@@ -37,6 +37,114 @@ Route::group(['prefix' => 'api/v1'], function()
            Route::match(['post','get'],'user/details','ApiController@getUserDetails');
         });   
 
+
+          /*---------End---------*/   
+ 
+        /*-------------Course API Route -------------*/
+
+        Route::match(['post','get'],'course',[
+            'as' => 'course',
+            'uses' => 'CourseController@index'
+            ]
+        );
+
+      
+        Route::match(['post','get'],'course/create',[
+            'as' => 'course.create',
+            'uses' => 'CourseController@create'
+            ]
+        );
+        Route::match(['post','get'],'course/edit',[
+            'as' => 'course.edit',
+            'uses' => 'CourseController@edit'
+            ]
+        );
+
+        Route::match(['post','get'],'course/update',[
+            'as' => 'course.update',
+            'uses' => 'CourseController@update'
+            ]
+        );
+
+         Route::match(['post','get'],'course/store',[
+            'as' => 'course.store',
+            'uses' => 'CourseController@store'
+            ]
+        );
+ 
+        /*-------------Course API Route END-------------*/
+
+
+        /*-------------Syllabus API Route -------------*/
+
+        Route::match(['post','get'],'syllabus',[
+            'as' => 'syllabus',
+            'uses' => 'SyllabusController@index'
+            ]
+        );
+
+      
+        Route::match(['post','get'],'syllabus/create',[
+            'as' => 'syllabus.create',
+            'uses' => 'SyllabusController@create'
+            ]
+        );
+
+        Route::match(['post','get'],'syllabus/edit',[
+            'as' => 'syllabus.edit',
+            'uses' => 'SyllabusController@edit'
+            ]
+        );
+
+        Route::match(['post','get'],'syllabus/update',[
+            'as' => 'syllabus.update',
+            'uses' => 'SyllabusController@update'
+            ]
+        );
+
+         Route::match(['post','get'],'syllabus/store',[
+            'as' => 'syllabus.store',
+            'uses' => 'SyllabusController@store'
+            ]
+        );
+ 
+        /*-------------Syllabus API Route END-------------*/
+
+
+        /*-------------Assignment API Route -------------*/
+
+        Route::match(['post','get'],'assignment',[
+            'as' => 'assignment',
+            'uses' => 'AssignmentController@index'
+            ]
+        ); 
+      
+        Route::match(['post','get'],'assignment/create',[
+            'as' => 'assignment.create',
+            'uses' => 'AssignmentController@create'
+            ]
+        );
+        
+        Route::match(['post','get'],'assignment/edit',[
+            'as' => 'assignment.edit',
+            'uses' => 'AssignmentController@edit'
+            ]
+        );
+
+        Route::match(['post','get'],'assignment/update',[
+            'as' => 'assignment.update',
+            'uses' => 'AssignmentController@update'
+            ]
+        );
+
+         Route::match(['post','get'],'syllabus/store',[
+            'as' => 'assignment.store',
+            'uses' => 'AssignmentController@store'
+            ]
+        );
+ 
+        /*-------------Syllabus API Route END-------------*/
+
         
             
     });

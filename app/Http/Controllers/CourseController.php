@@ -44,11 +44,8 @@ class CourseController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-    public function __construct() {
-        $this->middleware('admin');
-        View::share('viewPage', 'course');
-        View::share('helper',new Helper);
-        $this->record_per_page = Config::get('app.record_per_page');
+    public function __construct() { 
+
     }
 
     protected $users;
@@ -72,49 +69,136 @@ class CourseController extends Controller {
             exit();
         }
         // Search by name ,email and group
-        $search = Input::get('search');
-        $status = Input::get('status');
-        if ((isset($search) && !empty($search)) OR  (isset($status) && !empty($status)) ) {
+        $course_name = Input::get('course_name');
+        $professor_id = Input::get('professor_id');
+        if ((isset($course_name) && !empty($course_name)) OR  (isset($professor_id) && !empty($professor_id)) ) {
 
             $search = isset($search) ? Input::get('search') : '';
                
-            $course = Course::where(function($query) use($search,$status) {
-                        if (!empty($search)) {
-                            $query->Where('course_name', 'LIKE', "%$search%");
+            $course = Course::where(function($query) use($course_name,$professor_id) {
+                        if (!empty($course_name)) {
+                            $query->Where('course_name', 'LIKE', "%$course_name%");
+                        }
+                        if (!empty($professor_id)) {
+                            $query->Where('professor_id', '=', "$professor_id");
                         }
                         
-                    })->Paginate($this->record_per_page);
+                    })->get();
+            $status  =  1;
+            $code    =  200;
+            $message =  "Course list !"; 
+            if($course->count()==0){
+                $status  =  0;
+                $code    =  404;
+                $message =  "Course record not found!"; 
+             }
         } else {
-            $course = Course::orderBy('id','desc')->Paginate($this->record_per_page);
+            $course = Course::orderBy('id','desc')->get();
+             if($course->count()==0){
+                $status  =  0;
+                $code    =  404;
+                $message =  "Course record not found!"; 
+             }
             
         } 
-        return view('packages::course.index', compact('status','course', 'page_title', 'page_action'));
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$course
+                            ]
+                        );
     }
 
     /*
      * create Group method
      * */
 
-    public function create(Course $course) 
+    public function create(Request $request, Course $course) 
     {
-        $page_title     =   'Course';
-        $page_action    =   'Create Course';
-        $users           =   User::where('role_type',1)->get();
-        return view('packages::course.create', compact('users','course', 'page_title', 'page_action'));
+        if($request->get('professor_id'))
+        {
+            $users  =   User::where('role_type',1)->where('id',$request->get('professor_id'))->get();
+            
+        }else{
+           $users  =   User::where('role_type',1)->get(['id as professor_id','name']);
+        }
+        
+        if($users){
+            $status  =  1;
+            $code    =  200;
+            $message =  "Professor list !"; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "There is no professor exist!"; 
+        }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>['professor'=>$users]
+                            ]
+                        );
     }
 
     /*
      * Save Group method
      * */
 
-    public function store(CourseRequest $request, Course $course) 
+    public function store(Request $request, Course $course) 
     { 
-           
-        $course->fill(Input::all());
-        $course->save();
         
-        return Redirect::to(route('course'))
-                            ->with('flash_alert_notice', 'New Course was successfully created !');
+        //Server side valiation
+        $validator = Validator::make($request->all(), [
+
+           'course_name' => 'required', 
+           'professor_id' => 'required',
+           'session_id' => 'required'
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+
+        $course->fill(Input::all()); 
+        $course->save(); 
+        if($course){
+            $status  =  1;
+            $code    =  200;
+            $message =  "New Course was successfully created."; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Something went wrong!"; 
+        }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$course
+                            ]
+                        );
+
         }
 
     /*
@@ -123,20 +207,82 @@ class CourseController extends Controller {
      * object : $user
      * */
 
-    public function edit(Course $course) {
+    public function edit(Request $request,Course $course) {
 
-        $page_title = 'Course';
-        $page_action = 'Show Course';
-        $users           =   User::all();
-        return view('packages::course.edit', compact('course','users', 'page_title', 'page_action'));
+       if($request->get('course_id'))
+        {
+            $course  =   Course::where('id',$request->get('course_id'))->get(['id as course_id','professor_id','course_name','session_id','general_info']);
+            
+            if($course->count()){
+                    $status  =  1;
+                    $code    =  200;
+                    $message =  "Course found."; 
+            }else{
+                $status  =  0;
+                $code    =  400;
+                $message =  "Course ID  not found!";   
+            } 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Invalid course ID!"; 
+        }  
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$course
+                            ]
+                        );
     }
 
     public function update(Request $request, Course $course) 
     {
+        $validator = Validator::make($request->all(), [
+           'course_id'  =>  'required',
+           'course_name' => 'required',
+           'session_id' => 'required'
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+
         $course->fill(Input::all()); 
-        $course->save();
-        return Redirect::to(route('course'))
-                        ->with('flash_alert_notice', 'Course was  successfully updated !');
+        $course->save(); 
+
+        if($course){
+            $status  =  1;
+            $code    =  200;
+            $message =  " Course was successfully updated."; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Something went wrong!"; 
+        }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$course
+                            ]
+                        );
     }
     /*
      *Delete User
