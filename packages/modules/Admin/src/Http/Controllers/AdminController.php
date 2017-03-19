@@ -22,10 +22,10 @@ use Lang;
 use Validator;
 use App\Http\Requests;
 use App\Helpers\Helper as Helper;
-//use Modules\Admin\Models\User;
-use Modules\Admin\Models\CorporateProfile;
-use Modules\Admin\Models\Interview;
-use Modules\Admin\Models\Position;
+//use Modules\Admin\Models\User; 
+use Modules\Admin\Models\Course; 
+use Modules\Admin\Models\Assignment;
+use Modules\Admin\Models\Syllabus;
 use App\Admin;
 use Illuminate\Http\Request;
 use Session;
@@ -62,8 +62,11 @@ class AdminController extends Controller {
         $professor = User::where('role_type',1)->count();
          
         $student = User::where('role_type',2)->count();  
+        $course = Course::count();  
+        $assignment = Assignment::count();  
+        $syllabus = Syllabus::count();  
         $viewPage = "Admin";
-        return view('packages::dashboard.index',compact('professor','student','page_title','page_action','viewPage'));
+        return view('packages::dashboard.index',compact('syllabus','course','assignment','professor','student','page_title','page_action','viewPage'));
     }
 
    public function profile(Request $request,Admin $users)

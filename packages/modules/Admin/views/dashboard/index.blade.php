@@ -42,12 +42,12 @@
                 <div class="small-box bg-yellow">
                   <div class="inner">
                     <h3>{{ $professor}}</h3>
-                    <p>Registered Professort</p>
+                    <p>Registered Professor</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="{{route('user')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{route('professor')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
               
@@ -61,7 +61,7 @@
                   <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                   </div>
-                  <a href="{{route('user')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{route('student')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
@@ -70,13 +70,13 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                   <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $course }}</h3>
                     <p>Total Course</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                   </div>
-                  <a href="{{url('admin/condidateDirectory')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/course')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
@@ -85,13 +85,27 @@
                 <!-- small box -->
                 <div class="small-box bg-blue">
                   <div class="inner">
-                    <h3>0</h3>
+                      <h3>{{ $assignment }}</h3>
                     <p>Total Assigments</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                   </div>
-                  <a href="{{url('admin/condidateDirectory')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/assignment')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+              </div><!-- ./col -->
+
+                <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                  <div class="inner">
+                      <h3>{{ $syllabus }}</h3>
+                    <p>Total Syllabus</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                  </div>
+                  <a href="{{url('admin/syllabus')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
