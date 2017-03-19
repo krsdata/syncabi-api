@@ -56,7 +56,7 @@ class CourseController extends Controller {
 
     public function index(Course $course, Request $request) 
     { 
-       
+     
         // Search by name ,email and group
         $course_name = Input::get('course_name');
         $professor_id = Input::get('professor_id');
@@ -83,6 +83,10 @@ class CourseController extends Controller {
              }
         } else {
             $course = Course::orderBy('id','desc')->get();
+            $status  =  1;
+            $code    =  200;
+            $message =  "Course list !"; 
+
              if($course->count()==0){
                 $status  =  0;
                 $code    =  404;
