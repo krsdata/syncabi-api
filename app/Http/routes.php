@@ -43,31 +43,31 @@ Route::group(['prefix' => 'api/v1'], function()
         /*-------------Course API Route -------------*/
 
         Route::match(['post','get'],'course',[
-            'as' => 'course',
+            'as' => 'course_index',
             'uses' => 'CourseController@index'
             ]
         );
 
       
         Route::match(['post','get'],'course/create',[
-            'as' => 'course.create',
+            'as' => 'course_create',
             'uses' => 'CourseController@create'
             ]
         );
         Route::match(['post','get'],'course/edit',[
-            'as' => 'course.edit',
+            'as' => 'course_edit',
             'uses' => 'CourseController@edit'
             ]
         );
 
         Route::match(['post','get'],'course/update',[
-            'as' => 'course.update',
+            'as' => 'course_update',
             'uses' => 'CourseController@update'
             ]
         );
 
          Route::match(['post','get'],'course/store',[
-            'as' => 'course.store',
+            'as' => 'course_store',
             'uses' => 'CourseController@store'
             ]
         );
@@ -78,32 +78,32 @@ Route::group(['prefix' => 'api/v1'], function()
         /*-------------Syllabus API Route -------------*/
 
         Route::match(['post','get'],'syllabus',[
-            'as' => 'syllabus',
+            'as' => 'syllabus_index',
             'uses' => 'SyllabusController@index'
             ]
         );
 
       
         Route::match(['post','get'],'syllabus/create',[
-            'as' => 'syllabus.create',
+            'as' => 'syllabus_create',
             'uses' => 'SyllabusController@create'
             ]
         );
 
         Route::match(['post','get'],'syllabus/edit',[
-            'as' => 'syllabus.edit',
+            'as' => 'syllabus_edit',
             'uses' => 'SyllabusController@edit'
             ]
         );
 
         Route::match(['post','get'],'syllabus/update',[
-            'as' => 'syllabus.update',
+            'as' => 'syllabus_update',
             'uses' => 'SyllabusController@update'
             ]
         );
 
          Route::match(['post','get'],'syllabus/store',[
-            'as' => 'syllabus.store',
+            'as' => 'syllabus_store',
             'uses' => 'SyllabusController@store'
             ]
         );
@@ -114,31 +114,31 @@ Route::group(['prefix' => 'api/v1'], function()
         /*-------------Assignment API Route -------------*/
 
         Route::match(['post','get'],'assignment',[
-            'as' => 'assignment',
+            'as' => 'assignment_index',
             'uses' => 'AssignmentController@index'
             ]
         ); 
       
         Route::match(['post','get'],'assignment/create',[
-            'as' => 'assignment.create',
+            'as' => 'assignment_create',
             'uses' => 'AssignmentController@create'
             ]
         );
         
         Route::match(['post','get'],'assignment/edit',[
-            'as' => 'assignment.edit',
+            'as' => 'assignment_edit',
             'uses' => 'AssignmentController@edit'
             ]
         );
 
         Route::match(['post','get'],'assignment/update',[
-            'as' => 'assignment.update',
+            'as' => 'assignment_update',
             'uses' => 'AssignmentController@update'
             ]
         );
 
          Route::match(['post','get'],'syllabus/store',[
-            'as' => 'assignment.store',
+            'as' => 'assignment_store',
             'uses' => 'AssignmentController@store'
             ]
         );
