@@ -45,10 +45,7 @@ class AssignmentController extends Controller {
      * @return \Illuminate\View\View
      */
     public function __construct() {
-        $this->middleware('admin');
-        View::share('viewPage', 'assignment');
-        View::share('helper',new Helper);
-        $this->record_per_page = Config::get('app.record_per_page');
+        
     }
   
 
@@ -115,9 +112,8 @@ class AssignmentController extends Controller {
 
         $assignment->fill(Input::all()); 
         $assignment->professor_id = $cid->professor_id; 
-        $assignment->save(); 
-        return Redirect::to(route('assignment'))
-                            ->with('flash_alert_notice', 'New user was successfully created !');
+       // $assignment->save(); 
+       
         }
 
     /*

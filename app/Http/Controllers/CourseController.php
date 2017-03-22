@@ -48,7 +48,7 @@ class CourseController extends Controller {
 
     }
 
-    protected $users;
+    protected $course;
 
     /*
      * Dashboard

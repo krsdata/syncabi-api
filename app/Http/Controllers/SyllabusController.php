@@ -46,13 +46,10 @@ class SyllabusController extends Controller {
      * @return \Illuminate\View\View
      */
     public function __construct() {
-        $this->middleware('admin');
-        View::share('viewPage', 'Syllabus');
-        View::share('helper',new Helper);
-        $this->record_per_page = Config::get('app.record_per_page');
+     
     }
 
-    protected $users;
+    protected $syllabus;
 
     /*
      * Dashboard
@@ -60,18 +57,7 @@ class SyllabusController extends Controller {
 
     public function index(Syllabus $syllabus, Request $request) 
     { 
-        $page_title = 'Syllabus';
-        $page_action = 'View Syllabus'; 
-        if ($request->ajax()) {
-            $id = $request->get('id');
-            $status = $request->get('status');
-            $user = Syllabus::find($id);
-            $s = ($status == 1) ? $status = 0 : $status = 1;
-            $user->status = $s;
-            $user->save();
-            echo $s;
-            exit();
-        }
+        
         // Search by name ,email and group
         $search = Input::get('search');
         $status = Input::get('status');
@@ -84,12 +70,39 @@ class SyllabusController extends Controller {
                             $query->Where('syllabus_title', 'LIKE', "%$search%");
                         }
                         
-                    })->Paginate($this->record_per_page);
+                    })->get();
+            $status  =  1;
+            $code    =  200;
+            $message =  "Course list !"; 
+            if($syllabus->count()==0){
+                $status  =  0;
+                $code    =  404;
+                $message =  "syllabus record not found!"; 
+             }
+
         } else {
-            $syllabus = Syllabus::with('course')->orderBy('id','desc')->Paginate($this->record_per_page);
-            
+            $syllabus = Syllabus::with('course')->orderBy('id','desc')->get();
+            $status  =  1;
+            $code    =  200;
+            $message =  "syllabus list !"; 
+
+             if($syllabus->count()==0){
+                $status  =  0;
+                $code    =  404;
+                $message =  "syllabus record not found!"; 
+             } 
         } 
-        return view('packages::syllabus.index', compact('status','syllabus', 'page_title', 'page_action'));
+
+          return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        );
+
+         
     }
 
     /*
@@ -97,26 +110,92 @@ class SyllabusController extends Controller {
      * */
 
     public function create(Syllabus $syllabus) 
-    {
-        $page_title     =   'Syllabus';
-        $page_action    =   'Create Syllabus';
-        $course         =   Course::all();
-        return view('packages::syllabus.create', compact('syllabus','course', 'page_title', 'page_action'));
+    { 
+        $course     =   Course::get(['id as course_id','course_name']);
+
+        if($course->count()>0){
+            $status  =  1;
+            $code    =  200;
+            $message =  "Course list !"; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "There is no Course.Please add course first"; 
+        }
+
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>['course'=>$course]
+                            ]
+                        );
     }
 
     /*
      * Save Group method
      * */
 
-    public function store(SyllabusRequest $request, Syllabus $syllabus) 
+    public function store(Request $request, Syllabus $syllabus) 
     { 
             
+         //Server side valiation
+        $validator = Validator::make($request->all(), [
+
+           'syllabus_title' => 'required', 
+           'syllabus_description' => 'required',
+           'course_id' => 'required',
+           'grade_weight' => 'required'
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+ 
         $syllabus->fill(Input::all());
         $syllabus->save();
-        
-        return Redirect::to(route('syllabus'))
-                            ->with('flash_alert_notice', 'New syllabus was successfully created !');
+
+         $syllabus = Syllabus::with('course')->where(function($query) use($request,$syllabus)  {
+                            $query->Where('course_id',$request->get('course_id'));
+                            $query->Where('id',$syllabus->id);
+                    })->get(); 
+
+
+        if($syllabus){
+            $status  =  1;
+            $code    =  200;
+            $message =  "New Syllabus was successfully created."; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Something went wrong!"; 
         }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        );
+        
+        
+    }
 
     /*
      * Edit Group method
@@ -124,35 +203,206 @@ class SyllabusController extends Controller {
      * object : $user
      * */
 
-    public function edit(Syllabus $syllabus) {
+    public function edit(Request $request, Syllabus $syllabus) {
 
-        $page_title  = 'Syllabus';
-        $page_action = 'Show Syllabus';
-        $course      =   Course::all();
-        return view('packages::syllabus.edit', compact('course','syllabus', 'page_title', 'page_action'));
+          //Server side valiation
+        $validator = Validator::make($request->all(), [
+ 
+           'syllabus_id' => 'required', 
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+        $syllabus = Syllabus::with('course')->where(function($query) use($request,$syllabus)  {
+                            $query->Where('id',$request->get('syllabus_id'));
+                    })->get(); 
+
+        if($syllabus->count()>0){
+            $status  =  1;
+            $code    =  200;
+            $message =  "syllabus details !"; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Invalid Syllabus id!"; 
+        }
+
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        );
+
+
     }
 
     public function update(SyllabusRequest $request, Course $syllabus) 
     {
-        $syllabus->fill(Input::all()); 
+          //Server side valiation
+        $validator = Validator::make($request->all(), [
+
+           'syllabus_title' => 'required', 
+           'syllabus_description' => 'required',
+           'syllabus_id' => 'required', 
+           'grade_weight' => 'required'
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+ 
+        $syllabus->fill(Input::all());
         $syllabus->save();
-        return Redirect::to(route('syllabus'))
-                        ->with('flash_alert_notice', 'Syllabus was  successfully updated !');
+
+         $syllabus = Syllabus::with('course')->where(function($query) use($request,$syllabus)  {
+                            $query->Where('id',$syllabus->id);
+                    })->get(); 
+
+
+        if($syllabus){
+            $status  =  1;
+            $code    =  200;
+            $message =  "Syllabus was successfully updated."; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Something went wrong!"; 
+        }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        ); 
     }
     /*
      *Delete User
      * @param ID
      * 
      */
-    public function destroy(Syllabus $syllabus) 
+    public function destroy(Request $request ,Syllabus $syllabus) 
     { 
-        Syllabus::where('id',$syllabus->id)->delete();  
-        return Redirect::to(route('syllabus'))
-                        ->with('flash_alert_notice', 'Syllabus was successfully deleted!');
+         $validator = Validator::make($request->all(), [
+ 
+           'syllabus_id' => 'required', 
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+        $syllabus = Syllabus::where('id',$request->get('syllabus_id'))->delete(); 
+        if($syllabus){
+            $status  =  1;
+            $code    =  200;
+            $message =  "Syllabus was successfully deleted."; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Syllabus already deleted!"; 
+        }
+       
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        );   
+
     }
 
-    public function show(Syllabus $syllabus) {
-        
+    public function show(Request $request , Syllabus $syllabus) {
+       
+        $validator = Validator::make($request->all(), [
+ 
+           'syllabus_id' => 'required', 
+
+        ]);
+
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }   
+        $syllabus = Syllabus::with('course')->where(function($query) use($request,$syllabus)  {
+                            $query->Where('id',$request->get('syllabus_id'));
+                    })->get(); 
+
+        if($syllabus->count()>0){
+            $status  =  1;
+            $code    =  200;
+            $message =  "syllabus details !"; 
+        }else{
+            $status  =  0;
+            $code    =  500;
+            $message =  "Invalid Syllabus id!"; 
+        }
+
+        return response()->json(
+                            [ 
+                            "status"=>$status,
+                            'code'   => $code,
+                            "message"=>$message,
+                            'data'=>$syllabus
+                            ]
+                        );
     }
 
 }

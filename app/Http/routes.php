@@ -107,6 +107,12 @@ Route::group(['prefix' => 'api/v1'], function()
             'uses' => 'SyllabusController@store'
             ]
         );
+
+            Route::match(['post','get'],'syllabus/destroy',[
+            'as' => 'syllabus_destroy',
+            'uses' => 'SyllabusController@destroy'
+            ]
+        );
  
         /*-------------Syllabus API Route END-------------*/
 
@@ -137,7 +143,7 @@ Route::group(['prefix' => 'api/v1'], function()
             ]
         );
 
-         Route::match(['post','get'],'syllabus/store',[
+         Route::match(['post','get'],'assignment/store',[
             'as' => 'assignment_store',
             'uses' => 'AssignmentController@store'
             ]
