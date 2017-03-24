@@ -75,11 +75,12 @@
                                                       </td>
                                                     </tr>
                                                   @endif
+                                                  <?php $i=1; ?>
                                                 @foreach ($assignment as $key => $result)  
                                              <thead>
                                               <tbody>    
                                                 <tr>
-                                                    <td>{{ ++$key }}</td>
+                                                    <td>{{ ++$i }}</td>
                                                     <td>{{ $result->course->course_name}}</td>
                                                     <td>{{ $result->paper_title}}</td> 
                                                     <td>{{ $result->duration}}</td>
