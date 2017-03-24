@@ -81,7 +81,7 @@
                                               <tbody>    
                                                 <tr>
                                                     <td>{{ ++$i }}</td>
-                                                    <td>{{ $result->course->course_name}}</td>
+                                                    <td>{{ dd($result->course)}}</td>
                                                     <td>{{ $result->paper_title}}</td> 
                                                     <td>{{ $result->duration}}</td>
                                                     <td>{{ $result->chapter}} </td> 
