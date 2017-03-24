@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+
+   // dd(Hash::make('admin'));
     return view('welcome');
 });
 
@@ -108,9 +110,15 @@ Route::group(['prefix' => 'api/v1'], function()
             ]
         );
 
-            Route::match(['post','get'],'syllabus/destroy',[
+        Route::match(['post','get'],'syllabus/destroy',[
             'as' => 'syllabus_destroy',
             'uses' => 'SyllabusController@destroy'
+            ]
+        );
+
+         Route::match(['post','get'],'syllabus/show',[
+            'as' => 'syllabus_show',
+            'uses' => 'SyllabusController@show'
             ]
         );
  
