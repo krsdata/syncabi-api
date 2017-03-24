@@ -75,8 +75,9 @@
                                                       </td>
                                                     </tr>
                                                   @endif
-                                                  <?php $i=1; ?>
+                                                  <?php $i=0; ?>
                                                 @foreach ($assignment as $key => $result)  
+                                                @if(isset($result->course->course_name))
                                              <thead>
                                               <tbody>    
                                                 <tr>
@@ -104,8 +105,11 @@
 
                                                     </td>
                                                 </tr>
+                                                </tbody>
+                                                 </thead>
+                                                @endif
                                                 @endforeach 
-                                            </tbody></table>
+                                            </table>
                                     </div><!-- /.box-body --> 
                                     <div class="center" align="center">  {!! $assignment->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
                                 </div>
