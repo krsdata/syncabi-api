@@ -47,4 +47,9 @@ class Assignment extends Model
         return $this->belongsTo('Modules\Admin\Models\Syllabus','syllabus_id','id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('Modules\Admin\Models\User','professor_id','id');
+    }
+
 }
