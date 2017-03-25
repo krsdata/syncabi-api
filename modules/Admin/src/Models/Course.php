@@ -31,8 +31,23 @@ class Course extends Model
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
     protected $fillable = ['id','course_name','course_code','professor_id','status','session_id','general_info']; 
-
+    /*--User--*/
     public function user() 
+    {
+        return $this->belongsTo('Modules\Admin\Models\User','professor_id','id');
+    }
+    /*--Syllabus--*/
+    public function syllabus()
+    {
+        return $this->hasMany('Modules\Admin\Models\Syllabus','syllabus_id','id');
+    }
+    /*--Assignment--*/
+    public function assignment()
+    {
+        return $this->hasMany('Modules\Admin\Models\Assignment','assignment_id','id');
+    }
+
+    public function professor() 
     {
         return $this->belongsTo('Modules\Admin\Models\User','professor_id','id');
     }

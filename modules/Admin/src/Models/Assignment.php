@@ -31,14 +31,20 @@ class Assignment extends Model
 
     protected $fillable = ['id','course_id','paper_title','duration','status','chapter','type','description','grade','marks','due_date','syllabus_id']; 
     
-    public function user()
+    public function professor()
     {
         return $this->belongsTo('Modules\Admin\Models\User','professor_id','id');
     }
-
     public function course()
     {
         return $this->belongsTo('Modules\Admin\Models\Course','course_id','id');
+    }
+/****
+    * Syllabus has assignments 
+    */
+    public function syllabus()
+    {
+        return $this->belongsTo('Modules\Admin\Models\Syllabus','syllabus_id','id');
     }
 
 }

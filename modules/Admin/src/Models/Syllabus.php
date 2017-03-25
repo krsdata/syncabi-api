@@ -31,10 +31,20 @@ class Syllabus extends Model
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
 
     protected $fillable = ['id','syllabus_title','syllabus_description','course_id','grade_weight']; 
-
+    /*--Course--*/
     public function course() 
-    {
+    {   
         return $this->belongsTo('Modules\Admin\Models\Course','course_id','id');
+    }
+    /*--Assignment--*/
+    public function assignment()
+    {
+        return $this->hasMany('Modules\Admin\Models\Assignment','assignment_id','id');
+    }
+    /*---User---*/
+    public function professor()
+    {
+        return $this->belongsTo('Modules\Admin\Models\User','professor_id','id');
     }
 
 }

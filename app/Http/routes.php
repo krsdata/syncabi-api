@@ -156,6 +156,18 @@ Route::group(['prefix' => 'api/v1'], function()
             'uses' => 'AssignmentController@store'
             ]
         );
+
+          Route::match(['post','get'],'assignment/show',[
+            'as' => 'assignment_show',
+            'uses' => 'AssignmentController@show'
+            ]
+        );
+
+           Route::match(['post','get'],'assignment/destroy',[
+            'as' => 'assignment_destroy',
+            'uses' => 'AssignmentController@destroy'
+            ]
+        );
  
         /*-------------Syllabus API Route END-------------*/
 
