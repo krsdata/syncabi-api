@@ -163,9 +163,33 @@ Route::group(['prefix' => 'api/v1'], function()
             ]
         );
 
-           Route::match(['post','get'],'assignment/destroy',[
+        Route::match(['post','get'],'assignment/destroy',[
             'as' => 'assignment_destroy',
             'uses' => 'AssignmentController@destroy'
+            ]
+        );
+        /*----------Student API-----------------*/
+        Route::match(['post','get'],'student',[
+            'as' => 'assignment_index',
+            'uses' => 'StudentController@index'
+            ]
+        );
+
+        Route::match(['post','get'],'student/course',[
+            'as' => 'student_course',
+            'uses' => 'StudentController@course'
+            ]
+        );
+
+        Route::match(['post','get'],'student/course/syllabus',[
+            'as' => 'student_syllabus',
+            'uses' => 'StudentController@syllabus'
+            ]
+        );
+
+        Route::match(['post','get'],'student/course/syllabus/assignment',[
+            'as' => 'student_assignment',
+            'uses' => 'StudentController@assignment'
             ]
         );
  
