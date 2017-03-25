@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-    {  dd($e); 
+    {   
        //$referrer = $request->headers->get('referer'); 
        $path_info_url = $request->getpathInfo();
        $api_url='';

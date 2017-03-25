@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3a5db0a51c5c8a5848014a53da817b97",
-    "content-hash": "e6a908061a361d82767ac0dce64bce4f",
+    "hash": "32378e00f5ad6b7372c1fb2e7fe92297",
+    "content-hash": "2bd25ed8c6e68d4e75b86eaf873525af",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -672,16 +672,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.35",
+            "version": "1.0.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062"
+                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dda7f3ab94158a002d9846a97dc18ebfb7acc062",
-                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
+                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
                 "shasum": ""
             },
             "require": {
@@ -751,20 +751,20 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-02-09 11:33:58"
+            "time": "2017-03-22 15:43:14"
         },
         {
             "name": "maatwebsite/excel",
-            "version": "2.1.10",
+            "version": "2.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "a544a9b45b971499fb3b0fb7499ba0ac3b430233"
+                "reference": "46f1f9168202877d2d9c570042af315567b268c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/a544a9b45b971499fb3b0fb7499ba0ac3b430233",
-                "reference": "a544a9b45b971499fb3b0fb7499ba0ac3b430233",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/46f1f9168202877d2d9c570042af315567b268c0",
+                "reference": "46f1f9168202877d2d9c570042af315567b268c0",
                 "shasum": ""
             },
             "require": {
@@ -772,6 +772,7 @@
                 "illuminate/config": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
                 "illuminate/filesystem": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
                 "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
+                "jeremeamia/superclosure": "^2.3",
                 "nesbot/carbon": "~1.0",
                 "php": ">=5.5",
                 "phpoffice/phpexcel": "1.8.*",
@@ -818,20 +819,20 @@
                 "import",
                 "laravel"
             ],
-            "time": "2017-01-20 16:16:51"
+            "time": "2017-03-24 12:44:02"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.22.0",
+            "version": "1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bad29cb8d18ab0315e6c477751418a82c850d558",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1e044bc4b34e91743943479f1be7a1d5eb93add0",
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
                 "shasum": ""
             },
             "require": {
@@ -896,7 +897,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2017-03-13 07:08:03"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -991,182 +992,6 @@
                 "token"
             ],
             "time": "2015-06-29 05:41:44"
-        },
-        {
-            "name": "nayjest/builder",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nayjest/Builder.git",
-                "reference": "278ab1909055b7d18c0ffd525843dc7e8552d3a7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/Builder/zipball/278ab1909055b7d18c0ffd525843dc7e8552d3a7",
-                "reference": "278ab1909055b7d18c0ffd525843dc7e8552d3a7",
-                "shasum": ""
-            },
-            "require": {
-                "nayjest/manipulator": "^3",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "*",
-                "mockery/mockery": "*",
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Nayjest\\Builder\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii Stepanenko",
-                    "email": "mail@vitaliy.in"
-                }
-            ],
-            "description": "PHP package for instantiating objects using configurations",
-            "time": "2016-02-11 17:10:53"
-        },
-        {
-            "name": "nayjest/grids",
-            "version": "v0.9.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nayjest/Grids.git",
-                "reference": "388b72be7bb9c92c1afb6b5758b4155c3296e6d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/Grids/zipball/388b72be7bb9c92c1afb6b5758b4155c3296e6d6",
-                "reference": "388b72be7bb9c92c1afb6b5758b4155c3296e6d6",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": ">=4.2",
-                "nayjest/builder": "~2",
-                "php": ">=5.4.0"
-            },
-            "suggest": {
-                "laravelcollective/html": "Required to work with Laravel 5.X",
-                "maatwebsite/excel": "Required to work with Excel export component"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Nayjest\\Grids\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii [Nayjest] Stepanenko",
-                    "email": "mail@vitaliy.in",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Grids for Laravel 4 & Laravel 5 frameworks",
-            "homepage": "https://github.com/Nayjest/Grids",
-            "keywords": [
-                "bootstrap",
-                "database",
-                "eloquent",
-                "grid",
-                "html",
-                "laravel",
-                "laravel-5",
-                "laravel5",
-                "tables"
-            ],
-            "time": "2016-01-14 12:53:45"
-        },
-        {
-            "name": "nayjest/manipulator",
-            "version": "v3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nayjest/manipulator.git",
-                "reference": "80423ec59548de4bec6de2e821b3993974a7b4cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/manipulator/zipball/80423ec59548de4bec6de2e821b3993974a7b4cb",
-                "reference": "80423ec59548de4bec6de2e821b3993974a7b4cb",
-                "shasum": ""
-            },
-            "require": {
-                "nayjest/str-case-converter": "^1",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4||^5"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/mp.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii Stepanenko",
-                    "email": "mail@vitaliy.in"
-                }
-            ],
-            "description": "Utilities for manipulating PHP objects",
-            "time": "2016-09-27 15:52:17"
-        },
-        {
-            "name": "nayjest/str-case-converter",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nayjest/StrCaseConverter.git",
-                "reference": "e30f16afec3ed83e12369555e264263c23cf68bb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/StrCaseConverter/zipball/e30f16afec3ed83e12369555e264263c23cf68bb",
-                "reference": "e30f16afec3ed83e12369555e264263c23cf68bb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii Stepanenko",
-                    "email": "mail@vitaliy.in"
-                }
-            ],
-            "description": "Library for converting strings from camel case to snake case and vice versa.",
-            "time": "2015-06-04 13:11:29"
         },
         {
             "name": "nesbot/carbon",
@@ -1274,16 +1099,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774"
+                "reference": "965cdeb01fdcab7653253aa81d40441d261f1e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/965cdeb01fdcab7653253aa81d40441d261f1e66",
+                "reference": "965cdeb01fdcab7653253aa81d40441d261f1e66",
                 "shasum": ""
             },
             "require": {
@@ -1318,7 +1143,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-03-18 20:34:03"
+            "time": "2017-03-13 16:22:52"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1508,66 +1333,6 @@
                 "x509"
             ],
             "time": "2015-01-28 21:50:33"
-        },
-        {
-            "name": "proengsoft/laravel-jsvalidation",
-            "version": "v1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/proengsoft/laravel-jsvalidation.git",
-                "reference": "7d489aa81cf5dbceb4a04d7801307087b978f26e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/proengsoft/laravel-jsvalidation/zipball/7d489aa81cf5dbceb4a04d7801307087b978f26e",
-                "reference": "7d489aa81cf5dbceb4a04d7801307087b978f26e",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "~5.0",
-                "illuminate/contracts": "~5.0",
-                "illuminate/support": "~5.0",
-                "illuminate/validation": "~5.0",
-                "illuminate/view": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.*"
-            },
-            "suggest": {
-                "proengsoft/laravel-jsvalidation@1.1.~": "Allows validate ActiveURL, Exists, Unique and custom extensions"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Proengsoft\\JsValidation\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Albert Moreno",
-                    "email": "a.moreno@proengsoft.com",
-                    "homepage": "http://www.proengsoft.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Validate forms transparently with Javascript reusing your Laravel Validation Rules, Messages, and FormRequest",
-            "homepage": "https://github.com/proengsoft/laravel-jsvalidation",
-            "keywords": [
-                "form",
-                "javascript",
-                "jquery",
-                "laravel",
-                "proengsoft",
-                "validation",
-                "validator"
-            ],
-            "time": "2015-08-11 16:18:10"
         },
         {
             "name": "psr/log",
@@ -1914,16 +1679,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.2.4",
+            "version": "v3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "9137eb3a3328e413212826d63eeeb0217836e2b6"
+                "reference": "b7a1b9e0a0f623ce43b4c8d775eb138f190c9d8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9137eb3a3328e413212826d63eeeb0217836e2b6",
-                "reference": "9137eb3a3328e413212826d63eeeb0217836e2b6",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/b7a1b9e0a0f623ce43b4c8d775eb138f190c9d8d",
+                "reference": "b7a1b9e0a0f623ce43b4c8d775eb138f190c9d8d",
                 "shasum": ""
             },
             "require": {
@@ -1970,7 +1735,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:32:22"
+            "time": "2017-02-21 09:12:04"
         },
         {
             "name": "symfony/finder",
@@ -4366,16 +4131,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.4",
+            "version": "v3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/093e416ad096355149e265ea2e4cc1f9ee40ab1a",
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a",
                 "shasum": ""
             },
             "require": {
@@ -4417,7 +4182,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-16 22:46:52"
+            "time": "2017-03-07 16:47:02"
         },
         {
             "name": "webmozart/assert",

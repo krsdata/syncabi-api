@@ -11,8 +11,6 @@
         "laravelcollective/html": "^5.2",
         "illuminate/html": "^5.0",
         "laracasts/utilities": "~2.0",
-        "nayjest/grids": "~0.9",
-        "proengsoft/laravel-jsvalidation": "1.0.*",
         "barryvdh/laravel-dompdf": "0.6.*",
         "maatwebsite/excel": "^2.0"
 
@@ -32,7 +30,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Modules\\Admin\\": "packages/modules/Admin/src/" 		 
+            "Modules\\Admin\\": "modules/Admin/src/" 		 
         },
         "files": [
           "app/Helpers/Helper.php"
