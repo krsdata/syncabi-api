@@ -361,8 +361,9 @@ class SyllabusController extends Controller {
     public function clone(Request $request , Syllabus $syllabus)
     {
          $validator = Validator::make($request->all(), [
-           'syllabus_id' => 'required|exists:syllabus,id'
-        ]);
+                'syllabus_id' => 'required|exists:syllabus,id'
+                ]
+            );
 
          /** Return Error Message **/
         if ($validator->fails()) {
@@ -432,7 +433,6 @@ class SyllabusController extends Controller {
                         $assignment_clone->syllabus_id = $syllabus_id;
                         $result =  $assignment_clone->save();
                    }
-                  
                 }
                 $syllabus       =   [];
                 if($syllabus_clone_count>0)
@@ -447,7 +447,7 @@ class SyllabusController extends Controller {
                    $status      =   0;
                    $message     =   "Syllabus Clone is not created.";
                 }
-
+        }
                 return response()->json(
                             [ 
                                 "status"    =>  $status,
@@ -456,7 +456,7 @@ class SyllabusController extends Controller {
                                 'data'      =>  $syllabus
                             ]
                         ); 
-        }   
+            
     }
     public function show(Request $request , Syllabus $syllabus) {
        
