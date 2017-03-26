@@ -29,6 +29,7 @@ use App\Helpers\Helper;
 use App\ProfessorProfile;
 use App\StudentProfile;
 use Modules\Admin\Models\Syllabus;
+use Modules\Admin\Models\Assignment;
  
 
 
@@ -357,7 +358,106 @@ class SyllabusController extends Controller {
                         );   
 
     }
+    public function clone(Request $request , Syllabus $syllabus)
+    {
+         $validator = Validator::make($request->all(), [
+           'syllabus_id' => 'required|exists:syllabus,id'
+        ]);
 
+         /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return response()->json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }else{
+            $syllabus = Syllabus::with('assignment')->where('id',$request->get('syllabus_id'))->first();
+            
+            $syllabus_clone         = new Syllabus;
+            $syllabus_clone_count   = 0;
+            $assignment_clone_count = 0;
+
+                foreach ($syllabus->getattributes() as $key => $value) {
+                    $feild = $key;
+                    switch ($feild) {
+                        case 'id':
+                            # code...
+                            break;
+                        case 'created_at':
+                            # code...
+                            break;
+                        case 'updated_at':
+                            # code...
+                            break;
+                        
+                        default:
+                           $syllabus_clone->$key = $value;
+                           break;
+                    } 
+                }
+                $syllabus_clone_result = $syllabus_clone->save();
+                if($syllabus_clone_result){
+                    ++$syllabus_clone_count;
+                    $syllabus_id = $syllabus_clone->id;
+                   
+                    foreach ($syllabus->assignment as $key => $sa) {
+
+                        $assignment_clone = new Assignment;    
+                        foreach ($sa->getattributes() as $key => $value) {
+                            $feild = $key;
+                            switch ($feild) {
+                                case 'id':
+                                    # code...
+                                    break;
+                                case 'created_at':
+                                    # code...
+                                    break;
+                                case 'updated_at':
+                                    # code...
+                                    break;
+                                
+                                default:
+                                   $assignment_clone->$key = $value;
+                                    break;
+                            }
+                        }
+                        $assignment_clone->syllabus_id = $syllabus_id;
+                        $result =  $assignment_clone->save();
+                   }
+                  
+                }
+                $syllabus       =   [];
+                if($syllabus_clone_count>0)
+                {
+                    $syllabus    =   $syllabus = Syllabus::with('assignment')->where('id',$syllabus_id)->first();
+                    $code        =   200;
+                    $status      =   1;
+                    $message     =   "Syllabus Clone successfully created."; 
+                   
+                }else{
+                   $code        =   500;
+                   $status      =   0;
+                   $message     =   "Syllabus Clone is not created.";
+                }
+
+                return response()->json(
+                            [ 
+                                "status"    =>  $status,
+                                'code'      =>  $code,
+                                "message"   =>  $message,
+                                'data'      =>  $syllabus
+                            ]
+                        ); 
+        }   
+    }
     public function show(Request $request , Syllabus $syllabus) {
        
         $validator = Validator::make($request->all(), [

@@ -39,7 +39,7 @@ class Syllabus extends Model
     /*--Assignment--*/
     public function assignment()
     {
-        return $this->hasMany('Modules\Admin\Models\Assignment','assignment_id','id');
+        return $this->hasMany('Modules\Admin\Models\Assignment','syllabus_id','id');
     }
     /*---User---*/
     public function professor()

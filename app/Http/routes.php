@@ -121,6 +121,12 @@ Route::group(['prefix' => 'api/v1'], function()
             'uses' => 'SyllabusController@show'
             ]
         );
+
+        Route::match(['post','get'],'syllabus/clone',[
+            'as' => 'syllabus_clone',
+            'uses' => 'SyllabusController@clone'
+            ]
+        );
  
         /*-------------Syllabus API Route END-------------*/
 
