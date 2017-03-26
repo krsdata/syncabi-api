@@ -358,7 +358,7 @@ class SyllabusController extends Controller {
                         );   
 
     }
-    public function clone(Request $request , Syllabus $syllabus)
+    public function cloneSyllabus(Request $request , Syllabus $syllabus)
     {
          $validator = Validator::make($request->all(), [
                 'syllabus_id' => 'required|exists:syllabus,id'
