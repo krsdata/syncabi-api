@@ -19,7 +19,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/b606788108833f7765801dca35455fb23ce9f869",
                 "reference": "b606788108833f7765801dca35455fb23ce9f869",
-                "shasum": ""
+                "shasum": "" 
             },
             "require": {
                 "dompdf/dompdf": "0.6.*",
